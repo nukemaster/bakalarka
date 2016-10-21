@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/Img">
+        <file>tile_grid.png</file>
+        <file>tile_grid_green.png</file>
+        <file>tile_wall.png</file>
+    </qresource>
+    <qresource prefix="/Demo">
+        <file>map_test.bmp</file>
+        <file>map_test2.bmp</file>
+        <file>map_test3.bmp</file>
+        <file>map_test4.bmp</file>
+    </qresource>
+</RCC>

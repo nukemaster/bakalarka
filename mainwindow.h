@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QVector>
+#include <QGraphicsPixmapItem>
 
 #include <QDebug>
 
@@ -16,15 +18,20 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    int columns;
+    int rows;
 
 public slots:
     void coordinatesFromDetection(int x, int y);
+    //void getMap(QVector<int> board);
+    void getPixmapItem(QGraphicsPixmapItem * item);
 
-signals:
-    void test(int x, int y);
+
 
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene * scene;
+
 };
 
 #endif // MAINWINDOW_H

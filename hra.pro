@@ -14,10 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    detection.cpp
+    detection.cpp \
+    board.cpp \
+    tile.cpp
 
 HEADERS  += mainwindow.h \
-    detection.h
+    detection.h \
+    board.h \
+    tile.h
 
 FORMS    += mainwindow.ui \
     detection.ui
@@ -37,3 +41,6 @@ DEPENDPATH += $$(OPENCV_DIR)/include
 
 win32:CONFIG(release, debug|release): LIBS += -L$$(OPENCV_DIR)/x86/vc12/lib/ -lopencv_world300
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$(OPENCV_DIR)/x86/vc12/lib/ -lopencv_world300d
+
+RESOURCES += \
+    res.qrc
