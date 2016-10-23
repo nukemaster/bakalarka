@@ -45,11 +45,14 @@ public:
     TileUnit();
     TileUnit(QPixmap *pixmap);
 
+    void setPixmap(int id);
+
     void mousePressEvent(QGraphicsSceneMouseEvent * event);
 
-    double speed = 30;
+    void rollInitiative();
 
-    //void mousePressEvent(QGraphicsSceneMouseEvent * event);
+    int initiative = 0;
+    double speed = 30;
 };
 
 class TileMap : public Tile
@@ -60,10 +63,10 @@ public:
 
     void mousePressEvent(QGraphicsSceneMouseEvent * event);
 
+    void setPixmap(QPixmap pixmap);
+
     double speedCost = 5.0;                //cena pro vstup na pole
     double speedCostDiag = 7.0710678;    //cena pro vstup na pole
-
-    //void mousePressEvent(QGraphicsSceneMouseEvent * event);
 };
 
 #endif // TILE_H

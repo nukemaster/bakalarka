@@ -74,6 +74,9 @@ bool Board::loadMap(QString mapLocation)
         }
     }
 
+    for (int i = 0; i < tileTypes.size(); i++) {
+        delete tileTypes[i];
+    }
 
     this->setState(-1); //do DM modu
 
@@ -89,10 +92,9 @@ void Board::handleBoardClick(TileMap * tile)
 {
     switch (this->state) {
     case 0:     //default
-        qDebug()<<"click, state 0: "<<tile->x<<tile->y;
+
         break;
     case -2:     //vlozeni nove jednotky, ocekava
-        qDebug()<<"click state 1: "<<tile->x<<tile->y;
         if (this->insertUnitFromBuffer(tile->x, tile->y) == true) {
             this->setState(-1);   //navraeni do DM modu
         }
@@ -144,8 +146,9 @@ Tile * Board::tileOnXY(int x, int y)
 void Board::getNewUnit()
 {
     this->newUnitBuffer = new TileUnit(new QPixmap(":/Img/unit_blue.png"));
+    this->newUnitBuffer->pixmaps.append(new QPixmap(":/Img/unit_blue_selected.png"));
     qDebug()<<"pridani nova jednotky, ocekavano klepnuti na Tile;";
-    this->setState(-2);
+    this->setState(-2); //nastaveni stavu hraci plochy pro vlozeni nove jednotky
 }
 
 void Board::getDMMode(bool val)
@@ -162,5 +165,34 @@ void Board::getDMMode(bool val)
 void Board::getMapFileName(QString filename)
 {
     loadMap(filename);
+}
+
+void Board::getStartCombat()
+{
+    for (int i = 0; i < this->boardUnits.size(); i++) {
+        this->boardUnits[i]->rollInitiative();
+    }
+
+    //serazeni v Board::boardUnits sestupne podle initiative
+    std::sort(this->boardUnits.begin(), this->boardUnits.end() ,
+                [](const TileUnit* a, const TileUnit* b)
+                {
+                    return a->initiative > b->initiative;
+                }
+        );
+
+    this->boardUnits.first()->setPixmap(1);
+
+    setState(1);
+}
+
+void Board::getEndTurn()
+{
+    this->boardUnits[this->onTurn]->setPixmap(0);
+    this->onTurn++;
+    if (this->onTurn >= this->boardUnits.size()) {
+        this->onTurn = 0;
+    }
+    this->boardUnits[this->onTurn]->setPixmap(1);
 }
 

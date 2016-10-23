@@ -75,6 +75,19 @@
       <string>AddUnit</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushButtonStartCombat">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>320</y>
+       <width>89</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>start Combat</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QPushButton" name="pushButtonDM">
     <property name="geometry">
@@ -114,6 +127,42 @@
     <property name="text">
      <string>LoadMap</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="widgetPlayer" native="true">
+    <property name="geometry">
+     <rect>
+      <x>850</x>
+      <y>40</y>
+      <width>151</width>
+      <height>441</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="pushButtonEndTurn">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>80</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>EndTurn</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonMove">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>80</y>
+       <width>80</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pohyb</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

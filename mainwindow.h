@@ -34,10 +34,18 @@ private slots:
 
     void on_pushButtonMapLoad_clicked();
 
+    void on_pushButtonStartCombat_clicked();
+
+    void on_pushButtonEndTurn_clicked();
+
+    void on_pushButtonMove_clicked();
+
 signals:
     void sendNewUnit();
     void sendMap(QString mapFileName);
     void sendDMMode(bool val);
+    void sendStartCombat();
+    void sendEndTurn();
 
 private:
     Ui::MainWindow *ui;

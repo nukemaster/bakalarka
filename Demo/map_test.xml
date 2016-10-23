@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
-	<imgFile>map_test.bmp</imgFile>
+	<imgFile>map_test/map_test.bmp</imgFile>
 	<tile>
-		<imgFile>tile_grid.png</imgFile>
+		<imgFile>map_test/tile_grid.png</imgFile>
 		<colour>#ffffff</colour>
 		<blocking>0</blocking>
 		<speedCost>5.0</speedCost>
 		<speedCostDiagonal> 7.0710678</speedCostDiagonal>
 	</tile>
 	<tile>
-		<imgFile>tile_wall.png</imgFile>
+		<imgFile>map_test/tile_wall.png</imgFile>
 		<colour>#000000</colour>
 		<blocking>1</blocking>
 		<speedCost>5.0</speedCost>

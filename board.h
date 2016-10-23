@@ -40,6 +40,7 @@ public:
     int rows;
     int state = 0;
     int statePreDM = 0; //uklada stav ke kteremu se vraci, napr po DM modu
+    int onTurn = 0; //index aktualni jednotky na tahu
 
 
     bool insertUnitFromBuffer(int x, int y);
@@ -50,6 +51,8 @@ public slots:
     void getNewUnit();
     void getDMMode(bool val);
     void getMapFileName(QString filename);
+    void getStartCombat();
+    void getEndTurn();
 
 signals:
     //void sendBoard(QVector<int> board);

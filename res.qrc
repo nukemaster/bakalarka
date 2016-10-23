@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/Demo">
-        <file>Demo/map_test.bmp</file>
         <file>Demo/map_test.xml</file>
-        <file>Demo/tile_grid.png</file>
-        <file>Demo/tile_wall.png</file>
+        <file>Demo/map_test/map_test.bmp</file>
+        <file>Demo/map_test/tile_grid.png</file>
+        <file>Demo/map_test/tile_wall.png</file>
     </qresource>
     <qresource prefix="/Img">
         <file alias="unit_blue.png">Img/unit_blue.png</file>

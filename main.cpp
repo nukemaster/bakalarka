@@ -24,7 +24,8 @@ int main(int argc, char *argv[])
     QObject::connect(&w, SIGNAL(sendNewUnit()), &board, SLOT(getNewUnit()) );
     QObject::connect(&w, SIGNAL(sendDMMode(bool)), &board, SLOT(getDMMode(bool)));
     QObject::connect(&w, SIGNAL(sendMap(QString)), &board, SLOT(getMapFileName(QString)));
-
+    QObject::connect(&w, SIGNAL(sendStartCombat()), &board, SLOT(getStartCombat()));
+    QObject::connect(&w, SIGNAL(sendEndTurn()), &board, SLOT(getEndTurn()));
 
 
     //board.loadMap();

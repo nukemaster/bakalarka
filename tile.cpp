@@ -24,6 +24,13 @@ void Tile::addPixmap(QPixmap * pixmap)
 {
     this->pixmaps.append(pixmap);
 }
+
+void Tile::setPixmap(QPixmap pixmap)
+{
+    this->posShiftX = (TILESIZE - pixmap.width()) / 2;
+    this->posShiftY = (TILESIZE - pixmap.height()) / 2;
+    QGraphicsPixmapItem::setPixmap(pixmap);
+}
 /*
 void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -32,14 +39,6 @@ void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
     //QGraphicsPixmapItem::mousePressEvent(event);
     this->board->handleClick(this);
 }*/
-
-void Tile::setPixmap(QPixmap pixmap)
-{
-    this->pixmaps.append(&pixmap);
-    this->posShiftX = (TILESIZE - pixmap.width()) / 2;
-    this->posShiftY = (TILESIZE - pixmap.height()) / 2;
-    QGraphicsPixmapItem::setPixmap(pixmap);
-}
 
 void Tile::setPos(int x, int y)
 {
@@ -65,12 +64,23 @@ TileUnit::TileUnit(QPixmap *pixmap)
 
 }
 
+void TileUnit::setPixmap(int id)
+{
+     Tile::setPixmap(*(this->pixmaps[id]));
+}
+
 void TileUnit::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     event->accept();
     //QGraphicsPixmapItem::mousePressEvent(event);
     this->board->handleUnitClick(this);
 }
+
+void TileUnit::rollInitiative()
+{
+    this->initiative = rand();
+}
+
 
 ///////////////////////////////////////
 /////////////// TileMap ///////////////
@@ -93,4 +103,10 @@ void TileMap::mousePressEvent(QGraphicsSceneMouseEvent *event)
     event->accept();
     //QGraphicsPixmapItem::mousePressEvent(event);
     this->board->handleBoardClick(this);
+}
+
+void TileMap::setPixmap(QPixmap pixmap)
+{
+    this->pixmaps.append(&pixmap);
+    Tile::setPixmap(pixmap);
 }
