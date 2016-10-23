@@ -25,23 +25,11 @@ void MainWindow::coordinatesFromDetection(int x, int y)
 
 void MainWindow::getPixmapItem(QGraphicsPixmapItem *item)
 {
-    //qDebug()<<"test";
-    //this->ui->graphicsView->invalidateScene();
     this->scene->addItem(item);
 }
-/*
-void MainWindow::getMap(QVector<int> board)
-{
-    for (int x = 0; x < this->columns; x++) {
-        for (int y = 0; y < this->rows; y++) {
-            switch (board[y * this->rows + x]) {
-            case 1: //zed
 
-                break;
-            default:    //neco nedefinovaneho = prazdne pole
-                break;
-            }
-        }
-    }
+void MainWindow::on_pushButtonAddUnit_clicked()
+{
+    ///todo: nacteni souboru s jednotkou, preparsrovani souboru, vytvoreni jednotky a poslani
+    this->sendNewUnit();
 }
-*/

@@ -50,6 +50,29 @@
      <string>TextLabel</string>
     </property>
    </widget>
+   <widget class="QWidget" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>130</y>
+      <width>171</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="pushButtonAddUnit">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>20</y>
+       <width>93</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>AddUnit</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -57,7 +80,7 @@
      <x>0</x>
      <y>0</y>
      <width>1052</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

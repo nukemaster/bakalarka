@@ -1,10 +1,13 @@
 #include "mainwindow.h"
 #include "detection.h"
 #include "board.h"
+#include "tile.h"
 #include <QApplication>
 
 
 #include <QDebug>
+
+
 
 int main(int argc, char *argv[])
 {
@@ -16,13 +19,13 @@ int main(int argc, char *argv[])
     w.columns = board.columns;
     w.rows = board.rows;
 
+
     QObject::connect(&board, SIGNAL(sendPixmapItem(QGraphicsPixmapItem *)), &w, SLOT(getPixmapItem(QGraphicsPixmapItem *)) );
+    QObject::connect(&w, SIGNAL(sendNewUnit()), &board, SLOT(getNewUnit()) );
+
 
     board.loadMap();
-qDebug()<<"konec";
-    //QObject::connect(&board, SIGNAL(sendBoard(QVector<int>)), &w, SLOT(getMap(QVector<int>)) );
 
-    //board.sendBoard(board.board);
     /*
     Detection detection;
     DetectionThread detectionThread(&detection);

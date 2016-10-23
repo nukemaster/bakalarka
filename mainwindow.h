@@ -23,10 +23,13 @@ public:
 
 public slots:
     void coordinatesFromDetection(int x, int y);
-    //void getMap(QVector<int> board);
     void getPixmapItem(QGraphicsPixmapItem * item);
 
+private slots:
+    void on_pushButtonAddUnit_clicked();
 
+signals:
+    void sendNewUnit();
 
 private:
     Ui::MainWindow *ui;
