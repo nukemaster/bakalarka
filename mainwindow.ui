@@ -50,11 +50,14 @@
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QWidget" name="widget" native="true">
+   <widget class="QWidget" name="menuDM" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>860</x>
-      <y>130</y>
+      <x>10</x>
+      <y>80</y>
       <width>171</width>
       <height>371</height>
      </rect>
@@ -72,6 +75,45 @@
       <string>AddUnit</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButtonDM">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>30</y>
+      <width>89</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DM Button</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelBoardState">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>600</y>
+      <width>68</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>board State</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonMapLoad">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>40</y>
+      <width>89</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>LoadMap</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

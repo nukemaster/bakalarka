@@ -19,12 +19,15 @@ int main(int argc, char *argv[])
     w.columns = board.columns;
     w.rows = board.rows;
 
-
+    QObject::connect(&board, SIGNAL(sendStateChange(int)), &w, SLOT(getBoardState(int)) );
     QObject::connect(&board, SIGNAL(sendPixmapItem(QGraphicsPixmapItem *)), &w, SLOT(getPixmapItem(QGraphicsPixmapItem *)) );
     QObject::connect(&w, SIGNAL(sendNewUnit()), &board, SLOT(getNewUnit()) );
+    QObject::connect(&w, SIGNAL(sendDMMode(bool)), &board, SLOT(getDMMode(bool)));
+    QObject::connect(&w, SIGNAL(sendMap(QString)), &board, SLOT(getMapFileName(QString)));
 
 
-    board.loadMap();
+
+    //board.loadMap();
 
     /*
     Detection detection;

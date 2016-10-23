@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QVector>
 #include <QGraphicsPixmapItem>
+#include <QFileDialog>
 
 #include <QDebug>
 
@@ -18,6 +19,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void hideAll();
     int columns;
     int rows;
 
@@ -26,10 +28,16 @@ public slots:
     void getPixmapItem(QGraphicsPixmapItem * item);
 
 private slots:
+    void getBoardState(int state);
     void on_pushButtonAddUnit_clicked();
+    void on_pushButtonDM_clicked();
+
+    void on_pushButtonMapLoad_clicked();
 
 signals:
     void sendNewUnit();
+    void sendMap(QString mapFileName);
+    void sendDMMode(bool val);
 
 private:
     Ui::MainWindow *ui;

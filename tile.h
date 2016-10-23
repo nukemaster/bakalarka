@@ -47,7 +47,7 @@ public:
 
     void mousePressEvent(QGraphicsSceneMouseEvent * event);
 
-    float speed = 30;
+    double speed = 30;
 
     //void mousePressEvent(QGraphicsSceneMouseEvent * event);
 };
@@ -60,8 +60,8 @@ public:
 
     void mousePressEvent(QGraphicsSceneMouseEvent * event);
 
-    float speedCost = 5;                //cena pro vstup na pole
-    float speedCostDiag = 7.0710678;    //cena pro vstup na pole
+    double speedCost = 5.0;                //cena pro vstup na pole
+    double speedCostDiag = 7.0710678;    //cena pro vstup na pole
 
     //void mousePressEvent(QGraphicsSceneMouseEvent * event);
 };

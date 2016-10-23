@@ -1,15 +1,12 @@
 <RCC>
     <qresource prefix="/Demo">
-        <file alias="map_test.bmp">Demo/map_test.bmp</file>
-        <file alias="map_test2.bmp">Demo/map_test2.bmp</file>
-        <file alias="map_test3.bmp">Demo/map_test3.bmp</file>
-        <file alias="map_test4.bmp">Demo/map_test4.bmp</file>
+        <file>Demo/map_test.bmp</file>
+        <file>Demo/map_test.xml</file>
+        <file>Demo/tile_grid.png</file>
+        <file>Demo/tile_wall.png</file>
     </qresource>
     <qresource prefix="/Img">
-        <file alias="tile_green.png">Img/tile_grid_green.png</file>
-        <file alias="tile_wall.png">Img/tile_wall.png</file>
         <file alias="unit_blue.png">Img/unit_blue.png</file>
         <file alias="unit_blue_selected.png">Img/unit_blue_selected.png</file>
-        <file alias="tile_grid.png">Img/tile_grid.png</file>
     </qresource>
 </RCC>
