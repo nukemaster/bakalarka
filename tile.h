@@ -24,9 +24,9 @@ public:
     bool blocking = true;
     int state = 0;
 
-    QVector<QPixmap *> pixmaps; //seznam moznych pixmap, 0 - defaultni
 
-    void addPixmap(QPixmap *pixmap);
+
+    //void addPixmap(QPixmap *pixmap);
 
     //void mousePressEvent(QGraphicsSceneMouseEvent * event);
 
@@ -39,22 +39,6 @@ public:
     int posShiftY = 0;
 };
 
-class TileUnit : public Tile
-{
-public:
-    TileUnit();
-    TileUnit(QPixmap *pixmap);
-
-    void setPixmap(int id);
-
-    void mousePressEvent(QGraphicsSceneMouseEvent * event);
-
-    void rollInitiative();
-
-    int initiative = 0;
-    double speed = 30;
-};
-
 class TileMap : public Tile
 {
 public:
@@ -65,8 +49,34 @@ public:
 
     void setPixmap(QPixmap pixmap);
 
+
+    int indexPixmap0;
+    int indexPixmap1;
+    int indexPixmap2;
+
     double speedCost = 5.0;                //cena pro vstup na pole
     double speedCostDiag = 7.0710678;    //cena pro vstup na pole
+};
+
+class TileUnit : public Tile
+{
+public:
+    TileUnit();
+    TileUnit(QPixmap *pixmap);
+
+    void setPixmap(int id);
+    void addPixmap(QPixmap *pixmap);
+
+    void mousePressEvent(QGraphicsSceneMouseEvent * event);
+
+    void rollInitiative();
+
+    void showRange(int range);
+
+    QVector<QPixmap *> pixmaps; //seznam moznych pixmap, 0 - defaultni
+
+    int initiative = 0;
+    double speed = 30;
 };
 
 #endif // TILE_H

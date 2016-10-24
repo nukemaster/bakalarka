@@ -45,8 +45,12 @@ bool Board::loadMap(QString mapLocation)
     //nacteni moznych barev/dlazdic z XML
      for (e = e0.firstChildElement("tile") ; ! e.isNull(); e = e.nextSiblingElement("tile")) {
          tmp = new TileType();
-         tmp->imgFile = new QPixmap(QFileInfo(file).absoluteDir().absolutePath() + "/" + e.firstChildElement("imgFile").toElement().text());
-         this->pixmaps.append(tmp->imgFile);
+         this->pixmaps.append(new QPixmap(QFileInfo(file).absoluteDir().absolutePath() + "/" + e.firstChildElement("imgFile").toElement().text()));
+         tmp->imgFile = this->pixmaps.size() -1;
+         this->pixmaps.append(new QPixmap(QFileInfo(file).absoluteDir().absolutePath() + "/" + e.firstChildElement("imgRange1").toElement().text()));
+         tmp->imgFile1 = this->pixmaps.size() -1;
+         this->pixmaps.append(new QPixmap(QFileInfo(file).absoluteDir().absolutePath() + "/" + e.firstChildElement("imgRange2").toElement().text()));
+         tmp->imgFile2 = this->pixmaps.size() -1;
          tmp->colour = e.firstChildElement("colour").toElement().text();
          tmp->blocking = (e.firstChildElement("blocking").toElement().text().toInt() == 1) ? true : false;
          tmp->speedCost = e.firstChildElement("speedCost").toElement().text().toDouble();
@@ -63,7 +67,10 @@ bool Board::loadMap(QString mapLocation)
         {
             for (int i = 0; i < tileTypes.size(); i++) {
                 if (QColor(image.pixel(x, y)).name() == tileTypes[i]->colour ) {
-                    this->boardMap[x+ yplus] = new TileMap(x, y, tileTypes[i]->imgFile);
+                    this->boardMap[x+ yplus] = new TileMap(x, y, this->pixmaps[tileTypes[i]->imgFile]);
+                    this->boardMap[x+ yplus]->indexPixmap0 = tileTypes[i]->imgFile;
+                    this->boardMap[x+ yplus]->indexPixmap1 = tileTypes[i]->imgFile1;
+                    this->boardMap[x+ yplus]->indexPixmap2 = tileTypes[i]->imgFile2;
                     this->boardMap[x+ yplus]->blocking = tileTypes[i]->blocking;
                     this->boardMap[x+ yplus]->speedCost = tileTypes[i]->speedCost;
                     this->boardMap[x+ yplus]->speedCostDiag = tileTypes[i]->speedCostDiagonal;
@@ -86,6 +93,15 @@ bool Board::loadMap(QString mapLocation)
 void Board::handleUnitClick(TileUnit *tile)
 {
 
+}
+
+TileMap *Board::mapOnXY(int x, int y)
+{
+    if ((x < 0)||(x >= this->columns))
+        return NULL;
+    if ((y < 0)||(y >= this->rows))
+        return NULL;
+    return this->boardMap[x + y * (this->columns)];
 }
 
 void Board::handleBoardClick(TileMap * tile)
@@ -122,7 +138,7 @@ bool Board::insertUnitFromBuffer(int x, int y)
     return true;
 }
 
-Tile * Board::unitOnXY(int x, int y)
+TileUnit * Board::unitOnXY(int x, int y)
 {
     for (int i = 0; i < this->boardUnits.size(); i++) {
         if ((this->boardUnits[i]->x == x) && (this->boardUnits[i]->y) == y) {
@@ -130,6 +146,59 @@ Tile * Board::unitOnXY(int x, int y)
         }
     }
     return NULL;
+}
+
+bool Board::displayRange(int x, int y, double rangeRemain)
+{
+    int x1, y1;
+//qDebug()<<rangeRemain;
+    TileMap * tile = mapOnXY(x, y);
+    tile->setPixmap(*(this->pixmaps[1/*tile->indexPixmap1*/]));
+
+    x1 = x+1;
+    y1 = y+0;
+    tile = mapOnXY(x1, y1);
+    if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCost <= rangeRemain))
+        displayRange(x1, y1, rangeRemain - tile->speedCost);
+    x1 = x-1;
+    y1 = y+0;
+    tile = mapOnXY(x1, y1);
+    if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCost <= rangeRemain))
+        displayRange(x1, y1, rangeRemain - tile->speedCost);
+    x1 = x+0;
+    y1 = y+1;
+    tile = mapOnXY(x1, y1);
+    if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCost <= rangeRemain))
+        displayRange(x1, y1, rangeRemain - tile->speedCost);
+    x1 = x+0;
+    y1 = y-1;
+    tile = mapOnXY(x1, y1);
+    if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCost <= rangeRemain))
+        displayRange(x1, y1, rangeRemain - tile->speedCost);
+
+
+    x1 = x+1;
+    y1 = y+1;
+    tile = mapOnXY(x1, y1);
+    if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCostDiag <= rangeRemain))
+        displayRange(x1, y1, rangeRemain - tile->speedCostDiag);
+    x1 = x-1;
+    y1 = y-1;
+    tile = mapOnXY(x1, y1);
+    if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCostDiag <= rangeRemain))
+        displayRange(x1, y1, rangeRemain - tile->speedCostDiag);
+    x1 = x-1;
+    y1 = y+1;
+    tile = mapOnXY(x1, y1);
+    if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCostDiag <= rangeRemain))
+        displayRange(x1, y1, rangeRemain - tile->speedCostDiag);
+    x1 = x+1;
+    y1 = y-1;
+    tile = mapOnXY(x1, y1);
+    if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCostDiag <= rangeRemain))
+        displayRange(x1, y1, rangeRemain - tile->speedCostDiag);
+
+    return true;
 }
 
 void Board::setState(int value)
@@ -146,7 +215,7 @@ Tile * Board::tileOnXY(int x, int y)
 void Board::getNewUnit()
 {
     this->newUnitBuffer = new TileUnit(new QPixmap(":/Img/unit_blue.png"));
-    this->newUnitBuffer->pixmaps.append(new QPixmap(":/Img/unit_blue_selected.png"));
+    this->newUnitBuffer->addPixmap(new QPixmap(":/Img/unit_blue_selected.png"));
     qDebug()<<"pridani nova jednotky, ocekavano klepnuti na Tile;";
     this->setState(-2); //nastaveni stavu hraci plochy pro vlozeni nove jednotky
 }
@@ -169,6 +238,9 @@ void Board::getMapFileName(QString filename)
 
 void Board::getStartCombat()
 {
+    if (boardUnits.empty())
+        return;
+
     for (int i = 0; i < this->boardUnits.size(); i++) {
         this->boardUnits[i]->rollInitiative();
     }
@@ -194,5 +266,12 @@ void Board::getEndTurn()
         this->onTurn = 0;
     }
     this->boardUnits[this->onTurn]->setPixmap(1);
+}
+
+void Board::getMove()
+{
+    TileUnit * unit = this->boardUnits[this->onTurn];
+    this->displayRange(unit->x, unit->y, unit->speed);
+    qDebug()<<"konec";
 }
 

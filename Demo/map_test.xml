@@ -3,6 +3,8 @@
 	<imgFile>map_test/map_test.bmp</imgFile>
 	<tile>
 		<imgFile>map_test/tile_grid.png</imgFile>
+		<imgRange1>map_test/tile_grid_green.png</imgRange1>
+		<imgRange2>map_test/tile_grid_green.png</imgRange2>
 		<colour>#ffffff</colour>
 		<blocking>0</blocking>
 		<speedCost>5.0</speedCost>
@@ -10,6 +12,8 @@
 	</tile>
 	<tile>
 		<imgFile>map_test/tile_wall.png</imgFile>
+		<imgRange1>map_test/tile_wall.png</imgRange1>
+		<imgRange2>map_test/tile_wall.png</imgRange2>
 		<colour>#000000</colour>
 		<blocking>1</blocking>
 		<speedCost>5.0</speedCost>

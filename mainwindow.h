@@ -29,15 +29,12 @@ public slots:
 
 private slots:
     void getBoardState(int state);
+
     void on_pushButtonAddUnit_clicked();
     void on_pushButtonDM_clicked();
-
     void on_pushButtonMapLoad_clicked();
-
     void on_pushButtonStartCombat_clicked();
-
     void on_pushButtonEndTurn_clicked();
-
     void on_pushButtonMove_clicked();
 
 signals:
@@ -46,6 +43,7 @@ signals:
     void sendDMMode(bool val);
     void sendStartCombat();
     void sendEndTurn();
+    void sendMove();
 
 private:
     Ui::MainWindow *ui;

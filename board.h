@@ -29,7 +29,8 @@ public:
     bool loadMap(QString mapLocation);
     void handleBoardClick(TileMap *tile);
     void handleUnitClick(TileUnit * tile);
-    Tile * unitOnXY(int x, int y);
+    TileUnit * unitOnXY(int x, int y);
+    TileMap *mapOnXY(int x, int y);
 
     QVector<TileMap *> boardMap;
     QVector<TileUnit *> boardUnits;
@@ -42,6 +43,7 @@ public:
     int statePreDM = 0; //uklada stav ke kteremu se vraci, napr po DM modu
     int onTurn = 0; //index aktualni jednotky na tahu
 
+    bool displayRange(int x, int y, double rangeRemain);
 
     bool insertUnitFromBuffer(int x, int y);
     Tile *tileOnXY(int x, int y);
@@ -53,6 +55,7 @@ public slots:
     void getMapFileName(QString filename);
     void getStartCombat();
     void getEndTurn();
+    void getMove();
 
 signals:
     //void sendBoard(QVector<int> board);
@@ -63,11 +66,13 @@ signals:
 class TileType
 {
 public:
-    QPixmap * imgFile;
+    int  imgFile;
+    int  imgFile1;
+    int  imgFile2;
     QString colour;
     bool blocking;
-    bool speedCost;
-    bool speedCostDiagonal;
+    double speedCost;
+    double speedCostDiagonal;
 };
 
 #endif // BOARD_H

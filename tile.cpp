@@ -5,24 +5,17 @@ Board * Tile::board = NULL;
 Tile::Tile(int x, int y, QPixmap * pixmap)
 {
     this->setPixmap(*pixmap); //nastaveni aktualni pixmapy
-    this->pixmaps.append(pixmap);
     this->setPos(x, y);
 }
 
 Tile::Tile(QPixmap *pixmap)
 {
     this->setPixmap(*pixmap); //nastaveni aktualni pixmapy
-    this->pixmaps.append(pixmap);
 }
 
 Tile::Tile()
 {
 
-}
-
-void Tile::addPixmap(QPixmap * pixmap)
-{
-    this->pixmaps.append(pixmap);
 }
 
 void Tile::setPixmap(QPixmap pixmap)
@@ -31,14 +24,6 @@ void Tile::setPixmap(QPixmap pixmap)
     this->posShiftY = (TILESIZE - pixmap.height()) / 2;
     QGraphicsPixmapItem::setPixmap(pixmap);
 }
-/*
-void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    //qDebug()<<this->test;
-    event->accept();
-    //QGraphicsPixmapItem::mousePressEvent(event);
-    this->board->handleClick(this);
-}*/
 
 void Tile::setPos(int x, int y)
 {
@@ -61,12 +46,17 @@ TileUnit::TileUnit()
 TileUnit::TileUnit(QPixmap *pixmap)
      : Tile(pixmap)
 {
-
+    this->pixmaps.append(pixmap);
 }
 
 void TileUnit::setPixmap(int id)
 {
-     Tile::setPixmap(*(this->pixmaps[id]));
+    Tile::setPixmap(*(this->pixmaps[id]));
+}
+
+void TileUnit::addPixmap(QPixmap *pixmap)
+{
+    this->pixmaps.append(pixmap);
 }
 
 void TileUnit::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -79,6 +69,11 @@ void TileUnit::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void TileUnit::rollInitiative()
 {
     this->initiative = rand();
+}
+
+void TileUnit::showRange(int range)
+{
+
 }
 
 
@@ -107,6 +102,5 @@ void TileMap::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void TileMap::setPixmap(QPixmap pixmap)
 {
-    this->pixmaps.append(&pixmap);
     Tile::setPixmap(pixmap);
 }
