@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    w.show();
+    w.setFullScreen();
 
     Board board;
     w.columns = board.columns;
@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(&board, SIGNAL(sendStateChange(int)), &w, SLOT(getBoardState(int)) );
     QObject::connect(&board, SIGNAL(sendPixmapItem(QGraphicsPixmapItem *)), &w, SLOT(getPixmapItem(QGraphicsPixmapItem *)) );
+
     QObject::connect(&w, SIGNAL(sendNewUnit()), &board, SLOT(getNewUnit()) );
     QObject::connect(&w, SIGNAL(sendDMMode(bool)), &board, SLOT(getDMMode(bool)));
     QObject::connect(&w, SIGNAL(sendMap(QString)), &board, SLOT(getMapFileName(QString)));
@@ -31,13 +32,13 @@ int main(int argc, char *argv[])
 
     //board.loadMap();
 
-    /*
+/*
     Detection detection;
     DetectionThread detectionThread(&detection);
     detectionThread.start();
     //detection.show(); // todo: dodelat posuvniky pro nastaveni detekce
     QObject::connect(&detection, SIGNAL(newCoordinates(int,int)), &w, SLOT(coordinatesFromDetection(int,int)) );
-    */
+*/
 
     return a.exec();
 }

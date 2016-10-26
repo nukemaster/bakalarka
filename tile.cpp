@@ -71,9 +71,9 @@ void TileUnit::rollInitiative()
     this->initiative = rand();
 }
 
-void TileUnit::showRange(int range)
+void TileUnit::endOfRound()
 {
-
+    this->speedRemain = this->speed;
 }
 
 
@@ -96,7 +96,7 @@ TileMap::TileMap(int x, int y, QPixmap *pixmap)
 void TileMap::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     event->accept();
-    //QGraphicsPixmapItem::mousePressEvent(event);
+    this->sendClick();
     this->board->handleBoardClick(this);
 }
 

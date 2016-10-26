@@ -22,6 +22,7 @@ public:
     void hideAll();
     int columns;
     int rows;
+    void setFullScreen();
 
 public slots:
     void coordinatesFromDetection(int x, int y);

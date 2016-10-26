@@ -4,6 +4,7 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
+#include <QObject>
 #include "board.h"
 
 #define TILESIZE 50
@@ -11,8 +12,9 @@
 class Board;
 
 
-class Tile  : public QGraphicsPixmapItem
+class Tile  :  public QObject, public QGraphicsPixmapItem
 {
+    Q_OBJECT
 public:
     static Board *board;
 
@@ -37,6 +39,10 @@ public:
 
     int posShiftX = 0;
     int posShiftY = 0;
+
+signals:
+    void sendClick();
+
 };
 
 class TileMap : public Tile
@@ -56,6 +62,8 @@ public:
 
     double speedCost = 5.0;                //cena pro vstup na pole
     double speedCostDiag = 7.0710678;    //cena pro vstup na pole
+
+    double maxRangeRemain = -1.0;
 };
 
 class TileUnit : public Tile
@@ -70,6 +78,7 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent * event);
 
     void rollInitiative();
+    void endOfRound();
 
     void showRange(int range);
 
@@ -77,6 +86,7 @@ public:
 
     int initiative = 0;
     double speed = 30;
+    double speedRemain = 30;
 };
 
 #endif // TILE_H

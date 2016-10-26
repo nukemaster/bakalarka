@@ -4,6 +4,9 @@ Board::Board()
 {
     Tile::board = this;
 
+    this->waitOnMapClick = new QEventLoop();
+    this->waitOnUnitClick = new QEventLoop();
+
     this->setState(0);
 }
 
@@ -75,6 +78,7 @@ bool Board::loadMap(QString mapLocation)
                     this->boardMap[x+ yplus]->speedCost = tileTypes[i]->speedCost;
                     this->boardMap[x+ yplus]->speedCostDiag = tileTypes[i]->speedCostDiagonal;
                     this->sendPixmapItem(this->boardMap[x+ yplus]);
+                    QObject::connect(this->boardMap[x+ yplus], SIGNAL(sendClick()), this->waitOnMapClick, SLOT(quit()) );
                     break;
                 }
             }
@@ -90,52 +94,42 @@ bool Board::loadMap(QString mapLocation)
     return true;
 }
 
-void Board::handleUnitClick(TileUnit *tile)
+void Board::boardToDefault()
 {
-
+    this->tilesInRange = 0;
+    for (int i = 0; i < boardMap.size(); i++) {
+        boardMap[i]->setPixmap(*pixmaps[boardMap[i]->indexPixmap0]);
+        boardMap[i]->maxRangeRemain = -1;
+    }
 }
 
-TileMap *Board::mapOnXY(int x, int y)
+void Board::handleUnitClick(TileUnit *tile)
 {
-    if ((x < 0)||(x >= this->columns))
-        return NULL;
-    if ((y < 0)||(y >= this->rows))
-        return NULL;
-    return this->boardMap[x + y * (this->columns)];
+    this->lastClickUnit = tile;
 }
 
 void Board::handleBoardClick(TileMap * tile)
 {
-    switch (this->state) {
-    case 0:     //default
-
-        break;
-    case -2:     //vlozeni nove jednotky, ocekava
-        if (this->insertUnitFromBuffer(tile->x, tile->y) == true) {
-            this->setState(-1);   //navraeni do DM modu
-        }
-        break;
-    default:
-        break;
-    }
+    this->lastClickMap = tile;
 }
 
-bool Board::insertUnitFromBuffer(int x, int y)
+bool Board::canGoOnTile(TileMap *tile)
 {
-    if (this->newUnitBuffer == NULL) {
+    if (tile == NULL)
         return false;
-    }
-    if (this->unitOnXY(x, y) != NULL) {
+    if (tile->blocking == true)
         return false;
-    }
-    if (this->tileOnXY(x, y)->blocking == true) {
+    if (unitOnXY(tile->x, tile->y) != NULL)
         return false;
-    }
-    this->newUnitBuffer->setPos(x, y);
-    this->boardUnits.append(this->newUnitBuffer);
-    this->sendPixmapItem(this->newUnitBuffer);
-    this->newUnitBuffer = NULL;
     return true;
+}
+
+bool Board::canGoOnTile(int x, int y)
+{
+    TileMap * tile = mapOnXY(x, y);
+    if (tile == NULL)
+        return false;
+    return this->canGoOnTile(tile);
 }
 
 TileUnit * Board::unitOnXY(int x, int y)
@@ -148,55 +142,92 @@ TileUnit * Board::unitOnXY(int x, int y)
     return NULL;
 }
 
-bool Board::displayRange(int x, int y, double rangeRemain)
+TileMap *Board::mapOnXY(int x, int y)
 {
+    if ((x < 0)||(x >= this->columns))
+        return NULL;
+    if ((y < 0)||(y >= this->rows))
+        return NULL;
+    return this->boardMap[x + y * (this->columns)];
+}
+
+Tile * Board::tileOnXY(int x, int y)
+{
+    if ((x < 0)||(x >= columns)||(y < 0)||(y >= rows))
+        return NULL;
+    return this->boardMap[x + y * this->rows];
+}
+
+void Board::endOfRound()
+{
+    for (int i = 0; i < this->boardUnits.size(); i++) {
+        this->boardUnits[i]->endOfRound();
+    }
+}
+
+bool Board::displayRange(int x, int y, double rangeRemain, bool checkBlockingUnits = false)
+{   
     int x1, y1;
-//qDebug()<<rangeRemain;
+
     TileMap * tile = mapOnXY(x, y);
+    if (checkBlockingUnits) {
+        if (this->tilesInRange != 0) { //neprovede se u pocatecni dlazdice
+            TileUnit * tmpUnit;
+            if ((tmpUnit = this->unitOnXY(x, y)) != NULL) {//pokud je na dlazdici jednotka
+                if (tmpUnit->blocking)
+                    return false;
+            }
+        }
+    }
+    if (tile->maxRangeRemain < 0) { //poprve zapocitana v rangi
+        tilesInRange++;
+    }
+    if (tile->maxRangeRemain < rangeRemain)
+        tile->maxRangeRemain = rangeRemain;
     tile->setPixmap(*(this->pixmaps[1/*tile->indexPixmap1*/]));
 
     x1 = x+1;
     y1 = y+0;
     tile = mapOnXY(x1, y1);
     if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCost <= rangeRemain))
-        displayRange(x1, y1, rangeRemain - tile->speedCost);
+        displayRange(x1, y1, rangeRemain - tile->speedCost, true);
     x1 = x-1;
     y1 = y+0;
     tile = mapOnXY(x1, y1);
     if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCost <= rangeRemain))
-        displayRange(x1, y1, rangeRemain - tile->speedCost);
+        displayRange(x1, y1, rangeRemain - tile->speedCost, true);
     x1 = x+0;
     y1 = y+1;
     tile = mapOnXY(x1, y1);
     if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCost <= rangeRemain))
-        displayRange(x1, y1, rangeRemain - tile->speedCost);
+        displayRange(x1, y1, rangeRemain - tile->speedCost, true);
     x1 = x+0;
     y1 = y-1;
     tile = mapOnXY(x1, y1);
     if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCost <= rangeRemain))
-        displayRange(x1, y1, rangeRemain - tile->speedCost);
+        displayRange(x1, y1, rangeRemain - tile->speedCost, true);
 
 
     x1 = x+1;
     y1 = y+1;
     tile = mapOnXY(x1, y1);
     if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCostDiag <= rangeRemain))
-        displayRange(x1, y1, rangeRemain - tile->speedCostDiag);
+        displayRange(x1, y1, rangeRemain - tile->speedCostDiag, true);
     x1 = x-1;
     y1 = y-1;
     tile = mapOnXY(x1, y1);
     if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCostDiag <= rangeRemain))
-        displayRange(x1, y1, rangeRemain - tile->speedCostDiag);
+        displayRange(x1, y1, rangeRemain - tile->speedCostDiag, true);
     x1 = x-1;
     y1 = y+1;
     tile = mapOnXY(x1, y1);
     if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCostDiag <= rangeRemain))
-        displayRange(x1, y1, rangeRemain - tile->speedCostDiag);
+        displayRange(x1, y1, rangeRemain - tile->speedCostDiag, true);
     x1 = x+1;
     y1 = y-1;
     tile = mapOnXY(x1, y1);
     if ((tile != NULL)&&(tile->blocking != true)&&(tile->speedCostDiag <= rangeRemain))
-        displayRange(x1, y1, rangeRemain - tile->speedCostDiag);
+        displayRange(x1, y1, rangeRemain - tile->speedCostDiag, true);
 
     return true;
 }
@@ -207,27 +238,45 @@ void Board::setState(int value)
     state = value;
 }
 
-Tile * Board::tileOnXY(int x, int y)
+TileMap *Board::getMapTile()
 {
-    return this->boardMap[x + y * this->rows];
+    this->stateTmp = state;
+    this->setState(-2);
+    this->waitOnMapClick->exec(); //cekani nez nekdo klikne na tile
+    if (lastClickMap == NULL)
+        qDebug()<<"chybaaaaa";
+    TileMap * tmp = lastClickMap;
+    lastClickMap = NULL;
+    this->setState(this->stateTmp);
+    return tmp;
 }
 
 void Board::getNewUnit()
 {
-    this->newUnitBuffer = new TileUnit(new QPixmap(":/Img/unit_blue.png"));
-    this->newUnitBuffer->addPixmap(new QPixmap(":/Img/unit_blue_selected.png"));
-    qDebug()<<"pridani nova jednotky, ocekavano klepnuti na Tile;";
-    this->setState(-2); //nastaveni stavu hraci plochy pro vlozeni nove jednotky
+    this->setState(-2);
+    TileMap* mapTile = NULL;
+    while (!canGoOnTile(mapTile)) {
+        mapTile = this->getMapTile();  //zadani na ktere pole se bude vkladat
+    }
+
+    TileUnit *newUnitBuffer = new TileUnit(new QPixmap(":/Img/unit_blue.png"));
+    newUnitBuffer->addPixmap(new QPixmap(":/Img/unit_blue_selected.png"));
+    newUnitBuffer->setPos(mapTile->x, mapTile->y);
+    QObject::connect(newUnitBuffer, SIGNAL(sendClick()), this, SLOT(this->waitOnUnitClick->quit()) );
+    this->boardUnits.append(newUnitBuffer);
+    this->sendPixmapItem(newUnitBuffer);
+
+    this->setState(-1); //nastaveni stavu hraci plochy pro vlozeni nove jednotky
 }
 
 void Board::getDMMode(bool val)
 {
     if (val == true) {
-        this->statePreDM = this->state;
+        this->stateTmp = this->state;
         this->setState(-1);
     }
     else {
-        this->setState(this->statePreDM);
+        this->setState(this->stateTmp);
     }
 }
 
@@ -260,9 +309,11 @@ void Board::getStartCombat()
 
 void Board::getEndTurn()
 {
+    this->boardToDefault();
     this->boardUnits[this->onTurn]->setPixmap(0);
     this->onTurn++;
     if (this->onTurn >= this->boardUnits.size()) {
+        this->endOfRound();
         this->onTurn = 0;
     }
     this->boardUnits[this->onTurn]->setPixmap(1);
@@ -270,8 +321,19 @@ void Board::getEndTurn()
 
 void Board::getMove()
 {
+    this->boardToDefault(); //pro jistotu
     TileUnit * unit = this->boardUnits[this->onTurn];
-    this->displayRange(unit->x, unit->y, unit->speed);
-    qDebug()<<"konec";
+    this->displayRange(unit->x, unit->y, unit->speedRemain, true);
+    qDebug()<<this->tilesInRange;
+    if (this->tilesInRange == 1) {  //pokud neni v rangi vice nez 1 jednotka se nemuze nikam pohnout -> zbytecne ocekavat vztup
+        this->boardToDefault();
+        return;
+    }
+    TileMap * map;
+    while ((map = this->getMapTile())->maxRangeRemain < 0.0) {    }
+    unit->setPos(map->x, map->y);
+    unit->speedRemain = map->maxRangeRemain;
+    this->boardToDefault(); //vycisteni hraci plochy
 }
+
 

@@ -12,6 +12,8 @@
 #include <QDir>
 #include <QDomDocument>
 
+#include <QEventLoop>
+
 #include "tile.h"
 
 #include <QDebug>
@@ -27,27 +29,40 @@ class Board : public QObject
 public:
     Board();
     bool loadMap(QString mapLocation);
+    void boardToDefault();
+
     void handleBoardClick(TileMap *tile);
     void handleUnitClick(TileUnit * tile);
+
     TileUnit * unitOnXY(int x, int y);
     TileMap *mapOnXY(int x, int y);
+    Tile *tileOnXY(int x, int y);
 
     QVector<TileMap *> boardMap;
     QVector<TileUnit *> boardUnits;
-    TileUnit * newUnitBuffer = NULL; //docasne ulozena jednotka mezi nactenim a vlozenim na plochu
     QVector<QPixmap *> pixmaps;
 
     int columns;
     int rows;
     int state = 0;
-    int statePreDM = 0; //uklada stav ke kteremu se vraci, napr po DM modu
-    int onTurn = 0; //index aktualni jednotky na tahu
+    int stateTmp = 0; //uklada stav ke kteremu se vraci, napr po DM modu
+    int onTurn = 0;     //index aktualni jednotku na tahu
 
-    bool displayRange(int x, int y, double rangeRemain);
+    void endOfRound();
+    bool displayRange(int x, int y, double rangeRemain, bool checkBlockingUnits);
+    int tilesInRange = 0;
 
-    bool insertUnitFromBuffer(int x, int y);
-    Tile *tileOnXY(int x, int y);
+    bool canGoOnTile(TileMap * tile);
+    bool canGoOnTile(int x, int y);
+
     void setState(int value);
+
+    TileMap * getMapTile();
+    TileMap * lastClickMap = NULL;
+    TileUnit * lastClickUnit = NULL;
+
+    QEventLoop* waitOnMapClick;
+    QEventLoop* waitOnUnitClick;
 
 public slots:
     void getNewUnit();
