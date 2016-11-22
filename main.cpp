@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(&board, SIGNAL(sendStateChange(int)), &w, SLOT(getBoardState(int)) );
     QObject::connect(&board, SIGNAL(sendPixmapItem(QGraphicsPixmapItem *)), &w, SLOT(getPixmapItem(QGraphicsPixmapItem *)) );
+    QObject::connect(&board, SIGNAL(sendRangeItem(QGraphicsEllipseItem*)), &w, SLOT(getRangeItem(QGraphicsEllipseItem *)) );
 
     QObject::connect(&w, SIGNAL(sendNewUnit()), &board, SLOT(getNewUnit()) );
     QObject::connect(&w, SIGNAL(sendDMMode(bool)), &board, SLOT(getDMMode(bool)));
@@ -28,6 +29,7 @@ int main(int argc, char *argv[])
     QObject::connect(&w, SIGNAL(sendStartCombat()), &board, SLOT(getStartCombat()));
     QObject::connect(&w, SIGNAL(sendEndTurn()), &board, SLOT(getEndTurn()));
     QObject::connect(&w, SIGNAL(sendMove()), &board, SLOT(getMove()));
+    QObject::connect(&w, SIGNAL(sendNewMap(int,int)), &board, SLOT(getNewEmptyMap(int,int)));
 
 
     //board.loadMap();

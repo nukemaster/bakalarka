@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map>
-	<imgFile>map_test/map_test.bmp</imgFile>
-	<tile>
-		<imgFile>map_test/tile_grid.png</imgFile>
-		<imgRange1>map_test/tile_grid_green.png</imgRange1>
-		<imgRange2>map_test/tile_grid_green.png</imgRange2>
-		<colour>#ffffff</colour>
-		<blocking>0</blocking>
-		<speedCost>5.0</speedCost>
-		<speedCostDiagonal> 7.0710678</speedCostDiagonal>
-	</tile>
-	<tile>
-		<imgFile>map_test/tile_wall.png</imgFile>
-		<imgRange1>map_test/tile_wall.png</imgRange1>
-		<imgRange2>map_test/tile_wall.png</imgRange2>
-		<colour>#000000</colour>
-		<blocking>1</blocking>
-		<speedCost>5.0</speedCost>
-		<speedCostDiagonal> 7.0710678</speedCostDiagonal>
-	</tile>
+<map file="map_test/map_test.bmp">
+		<tile color="#ffffff">
+			<pixmap name="empty">map_test/tile_grid.png</pixmap>
+			<blocking>0</blocking>
+			<difficultTerrain>0</difficultTerrain>
+		</tile>
+		<tile color="#000000">
+			<pixmap name="wall">map_test/tile_wall.png</pixmap>
+			<blocking>1</blocking>
+			<difficultTerrain>0</difficultTerrain>
+		</tile>
+		<tile color="#8c6239">
+			<pixmap name="door">map_test/tile_door.png</pixmap>
+			<blocking>1</blocking>
+			<difficultTerrain>0</difficultTerrain>
+		</tile>
+		<tile color="#666666">
+			<pixmap name="wall2">map_test/tile_wall2.png</pixmap>
+			<blocking>1</blocking>
+			<difficultTerrain>0</difficultTerrain>
+		</tile>
 </map>

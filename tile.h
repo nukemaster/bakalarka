@@ -26,14 +26,13 @@ public:
     bool blocking = true;
     int state = 0;
 
-
-
     //void addPixmap(QPixmap *pixmap);
 
     //void mousePressEvent(QGraphicsSceneMouseEvent * event);
 
     ///<overwrite>
     void setPixmap(QPixmap pixmap);
+    //void setPixmapI(int index);
     void setPos(int x, int y);
     ///</overwrite>
 
@@ -48,17 +47,13 @@ signals:
 class TileMap : public Tile
 {
 public:
-    TileMap();
-    TileMap(int x, int y, QPixmap *pixmap);
+    TileMap(int x, int y, QString pixmapIndex);
+    void setPixmap(QString pixmapIndex);
+    void showPixmap(QString pixmapIndex);
 
     void mousePressEvent(QGraphicsSceneMouseEvent * event);
 
-    void setPixmap(QPixmap pixmap);
-
-
-    int indexPixmap0;
-    int indexPixmap1;
-    int indexPixmap2;
+    QString pixmapIndex;
 
     double speedCost = 5.0;                //cena pro vstup na pole
     double speedCostDiag = 7.0710678;    //cena pro vstup na pole

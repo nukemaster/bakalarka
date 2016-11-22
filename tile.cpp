@@ -24,7 +24,14 @@ void Tile::setPixmap(QPixmap pixmap)
     this->posShiftY = (TILESIZE - pixmap.height()) / 2;
     QGraphicsPixmapItem::setPixmap(pixmap);
 }
+/*
+void Tile::setPixmapI(int index)
+{
+    QPixmap * pix = (*(this->pixmaps))[index];
+    setPixmap(*pix);
 
+}
+*/
 void Tile::setPos(int x, int y)
 {
     QGraphicsPixmapItem::setPos(x * TILESIZE + this->posShiftX, y * TILESIZE + this->posShiftY);
@@ -81,16 +88,10 @@ void TileUnit::endOfRound()
 /////////////// TileMap ///////////////
 ///////////////////////////////////////
 
-TileMap::TileMap()
-    : Tile()
+TileMap::TileMap(int x, int y, QString pixmapIndex)
 {
-
-}
-
-TileMap::TileMap(int x, int y, QPixmap *pixmap)
-    : Tile(x, y, pixmap)
-{
-
+    this->setPos(x, y);
+    this->setPixmap(pixmapIndex);
 }
 
 void TileMap::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -100,7 +101,15 @@ void TileMap::mousePressEvent(QGraphicsSceneMouseEvent *event)
     this->board->handleBoardClick(this);
 }
 
-void TileMap::setPixmap(QPixmap pixmap)
+void TileMap::setPixmap(QString pixmapIndex)
 {
-    Tile::setPixmap(pixmap);
+    QPixmap * pix = this->board->pixmaps[pixmapIndex];
+    Tile::setPixmap(*pix);
+    this->pixmapIndex = pixmapIndex;
+}
+
+void TileMap::showPixmap(QString pixmapIndex)
+{
+    QPixmap * pix = this->board->pixmaps[pixmapIndex];
+    Tile::setPixmap(*pix);
 }

@@ -8,5 +8,8 @@
     <qresource prefix="/Img">
         <file alias="unit_blue.png">Img/unit_blue.png</file>
         <file alias="unit_blue_selected.png">Img/unit_blue_selected.png</file>
+        <file>Img/tile_grid.png</file>
+        <file>Img/tile_grid_green.png</file>
+        <file>Img/tile_wall.png</file>
     </qresource>
 </RCC>

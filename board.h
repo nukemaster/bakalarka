@@ -5,6 +5,7 @@
 #include <QImage>
 #include <QColor>
 #include <QVector>
+#include <QMap>
 #include <QGraphicsPixmapItem>
 
 #include <QFile>
@@ -18,6 +19,10 @@
 
 #include <QDebug>
 
+#define DEFAULT_EMPTY_TILE_IMG ":/Img/Img/tile_grid.png"
+#define DEFAULT_RANGE_INDICATOR ":/Img/Img/tile_grid_green.png"
+#define DEFAULT_WALL_TILE_IMG ":/Img/Img/tile_wall.png"
+
 class Tile;
 class TileUnit;
 class TileMap;
@@ -29,6 +34,7 @@ class Board : public QObject
 public:
     Board();
     bool loadMap(QString mapLocation);
+    bool createEmptyMap(int width, int height);
     void boardToDefault();
 
     void handleBoardClick(TileMap *tile);
@@ -40,7 +46,9 @@ public:
 
     QVector<TileMap *> boardMap;
     QVector<TileUnit *> boardUnits;
-    QVector<QPixmap *> pixmaps;
+    QMap<QString, QPixmap *> pixmaps;
+
+    void loadDefaultPixmaps();
 
     int columns;
     int rows;
@@ -50,6 +58,7 @@ public:
 
     void endOfRound();
     bool displayRange(int x, int y, double rangeRemain, bool checkBlockingUnits);
+    bool displayRange2(int x, int y, double range);
     int tilesInRange = 0;
 
     bool canGoOnTile(TileMap * tile);
@@ -64,6 +73,7 @@ public:
     QEventLoop* waitOnMapClick;
     QEventLoop* waitOnUnitClick;
 
+
 public slots:
     void getNewUnit();
     void getDMMode(bool val);
@@ -71,23 +81,22 @@ public slots:
     void getStartCombat();
     void getEndTurn();
     void getMove();
+    void getNewEmptyMap(int x, int y);
 
 signals:
     //void sendBoard(QVector<int> board);
     void sendPixmapItem(QGraphicsPixmapItem * item);
+    void sendRangeItem(QGraphicsEllipseItem * item);
     void sendStateChange(int state);
 };
 
 class TileType
 {
 public:
-    int  imgFile;
-    int  imgFile1;
-    int  imgFile2;
-    QString colour;
+    QString pixmapIndex;
+    QString color;
     bool blocking;
-    double speedCost;
-    double speedCostDiagonal;
+    bool difficultTerrain;
 };
 
 #endif // BOARD_H
