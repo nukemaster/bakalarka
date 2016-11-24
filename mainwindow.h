@@ -83,6 +83,8 @@ private slots:
 
     void on_btn_editMap_empty_clicked();
 
+    void on_btn_newMap_back_clicked();
+
 signals:
     void sendNewUnit();
     void sendMap(QString mapFileName);

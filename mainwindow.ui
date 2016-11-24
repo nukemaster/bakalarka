@@ -206,7 +206,7 @@
       <x>620</x>
       <y>80</y>
       <width>161</width>
-      <height>291</height>
+      <height>341</height>
      </rect>
     </property>
     <widget class="QSlider" name="slider_newMap_X">
@@ -219,7 +219,7 @@
       </rect>
      </property>
      <property name="value">
-      <number>10</number>
+      <number>20</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -235,7 +235,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>10</string>
+      <string>20</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -251,7 +251,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>50</string>
+      <string>100</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -267,7 +267,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>10</string>
+      <string>20</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -283,7 +283,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>50</string>
+      <string>100</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -312,7 +312,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>15</string>
+      <string>30</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -328,7 +328,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>15</string>
+      <string>30</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -344,7 +344,7 @@
       </rect>
      </property>
      <property name="value">
-      <number>10</number>
+      <number>20</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -402,11 +402,27 @@
       <string>m</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="btn_newMap_back">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>290</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Zpět</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="box_editMap" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>180</x>
       <y>40</y>
       <width>141</width>
       <height>391</height>

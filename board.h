@@ -8,6 +8,8 @@
 #include <QMap>
 #include <QGraphicsPixmapItem>
 
+#include<QBrush>
+
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
@@ -26,6 +28,7 @@
 class Tile;
 class TileUnit;
 class TileMap;
+class TileType;
 
 class Board : public QObject
 {
@@ -45,8 +48,9 @@ public:
     Tile *tileOnXY(int x, int y);
 
     QVector<TileMap *> boardMap;
+    QVector<TileMap *> tmp; //pomocne napriklad na zobrazovani range
     QVector<TileUnit *> boardUnits;
-    QMap<QString, QPixmap *> pixmaps;
+    QMap<QString, TileType *> tileTypes;
 
     void loadDefaultPixmaps();
 
@@ -93,7 +97,9 @@ signals:
 class TileType
 {
 public:
-    QString pixmapIndex;
+    TileType(QString pixmapPath, bool blocking, bool difficultTerrain, QString color = NULL);
+
+    QPixmap * pixmap;
     QString color;
     bool blocking;
     bool difficultTerrain;

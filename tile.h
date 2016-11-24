@@ -10,6 +10,7 @@
 #define TILESIZE 50
 
 class Board;
+class TileType;
 
 
 class Tile  :  public QObject, public QGraphicsPixmapItem
@@ -47,18 +48,26 @@ signals:
 class TileMap : public Tile
 {
 public:
-    TileMap(int x, int y, QString pixmapIndex);
-    void setPixmap(QString pixmapIndex);
-    void showPixmap(QString pixmapIndex);
+    TileMap(int x, int y, TileType* tileType);
+    TileMap(int x, int y, QString tileTypeName);
+    double getSpeedCost(bool diagonal);
 
     void mousePressEvent(QGraphicsSceneMouseEvent * event);
 
-    QString pixmapIndex;
+    bool difficultTerrain;
 
-    double speedCost = 5.0;                //cena pro vstup na pole
-    double speedCostDiag = 7.0710678;    //cena pro vstup na pole
+    QPixmap * pixmap;
+    void refreshPixmap();
+    void changeTo(QString tileTypeName);
+    void showPixmap(QPixmap * pixmap);
 
-    double maxRangeRemain = -1.0;
+    double maxRangeRemain = -1.0;   //pomocna promena pri ukazovani range
+
+protected:
+    static const double speedCost;                    //cena pro vstup na pole
+    static const double speedCostDifficultTerain;     //cena pro vstup na pole
+    static const double speedCostDiag;                //cena pro vstup na pole
+    static const double speedCostDiagDifficultTerain; //cena pro vstup na pole
 };
 
 class TileUnit : public Tile
