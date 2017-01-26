@@ -1,21 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>Calibration</class>
  <widget class="QWidget" name="Calibration">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>787</width>
+    <height>659</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <widget class="QSlider" name="slider_inputCut_Y1">
+   <property name="geometry">
+    <rect>
+     <x>11</x>
+     <y>20</y>
+     <width>20</width>
+     <height>581</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>424</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="invertedAppearance">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_touchArea_Y1">
+   <property name="geometry">
+    <rect>
+     <x>71</x>
+     <y>49</y>
+     <width>20</width>
+     <height>511</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>424</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="invertedAppearance">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_inputCut_X1">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>10</y>
+     <width>651</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>512</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_touchArea_X2">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>550</y>
+     <width>531</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>512</number>
+   </property>
+   <property name="value">
+    <number>512</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_touchArea_depth">
+   <property name="geometry">
+    <rect>
+     <x>381</x>
+     <y>129</y>
+     <width>20</width>
+     <height>371</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>3000</number>
+   </property>
+   <property name="value">
+    <number>3000</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="invertedAppearance">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_calibration_P3">
+   <property name="geometry">
+    <rect>
+     <x>131</x>
+     <y>230</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>P3</string>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_inpicCut_maxDepth">
+   <property name="geometry">
+    <rect>
+     <x>331</x>
+     <y>130</y>
+     <width>20</width>
+     <height>371</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>3000</number>
+   </property>
+   <property name="value">
+    <number>3000</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="invertedAppearance">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_touchArea_Y2">
+   <property name="geometry">
+    <rect>
+     <x>671</x>
+     <y>50</y>
+     <width>18</width>
+     <height>511</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>424</number>
+   </property>
+   <property name="value">
+    <number>424</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="invertedAppearance">
+    <bool>true</bool>
+   </property>
+   <property name="invertedControls">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_save">
+   <property name="geometry">
+    <rect>
+     <x>491</x>
+     <y>460</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Ulozit</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_calibration_P1">
+   <property name="geometry">
+    <rect>
+     <x>131</x>
+     <y>130</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>P1</string>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_inputCut_X2">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>600</y>
+     <width>651</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>512</number>
+   </property>
+   <property name="value">
+    <number>512</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_calibration_P2">
+   <property name="geometry">
+    <rect>
+     <x>131</x>
+     <y>180</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>P2</string>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_inputCut_Y2">
+   <property name="geometry">
+    <rect>
+     <x>721</x>
+     <y>20</y>
+     <width>18</width>
+     <height>581</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>424</number>
+   </property>
+   <property name="value">
+    <number>424</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="invertedAppearance">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_touchArea_X1">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>50</y>
+     <width>521</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>512</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="clicked_indicator">
+   <property name="geometry">
+    <rect>
+     <x>494</x>
+     <y>120</y>
+     <width>50</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="res.qrc">:/Img/unit_blue.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QDoubleSpinBox" name="doubleSpinBox">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>80</y>
+     <width>161</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="decimals">
+    <number>8</number>
+   </property>
+   <property name="minimum">
+    <double>-99.000000000000000</double>
+   </property>
+  </widget>
+  <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>80</y>
+     <width>151</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="decimals">
+    <number>8</number>
+   </property>
+   <property name="minimum">
+    <double>-99.000000000000000</double>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>500</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>500</y>
+     <width>55</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="calibrationImage">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>90</y>
+     <width>55</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>380</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Spočítat</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_P1_val">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>140</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_P2_val">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>190</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_P3_val">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>240</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_calibration_values">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>430</y>
+     <width>201</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_calibration_tP1">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>290</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>tP1</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_calibration_tP2">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>350</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>tP2</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_tP1_val">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>300</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_tP2_val">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>350</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <zorder>slider_inputCut_Y2</zorder>
+  <zorder>slider_inputCut_Y1</zorder>
+  <zorder>slider_touchArea_Y1</zorder>
+  <zorder>slider_inputCut_X1</zorder>
+  <zorder>slider_touchArea_X2</zorder>
+  <zorder>slider_touchArea_depth</zorder>
+  <zorder>btn_calibration_P3</zorder>
+  <zorder>slider_inpicCut_maxDepth</zorder>
+  <zorder>slider_touchArea_Y2</zorder>
+  <zorder>btn_save</zorder>
+  <zorder>btn_calibration_P1</zorder>
+  <zorder>slider_inputCut_X2</zorder>
+  <zorder>btn_calibration_P2</zorder>
+  <zorder>slider_touchArea_X1</zorder>
+  <zorder>doubleSpinBox</zorder>
+  <zorder>doubleSpinBox_2</zorder>
+  <zorder>label</zorder>
+  <zorder>label_2</zorder>
+  <zorder>pushButton</zorder>
+  <zorder>label_P1_val</zorder>
+  <zorder>label_P2_val</zorder>
+  <zorder>label_P3_val</zorder>
+  <zorder>label_calibration_values</zorder>
+  <zorder>btn_calibration_tP1</zorder>
+  <zorder>btn_calibration_tP2</zorder>
+  <zorder>label_tP1_val</zorder>
+  <zorder>label_tP2_val</zorder>
+  <zorder>calibrationImage</zorder>
+  <zorder>clicked_indicator</zorder>
  </widget>
- <pixmapfunction/>
- <connections/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>slider_inpicCut_maxDepth</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>340</x>
+     <y>315</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>297</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_touchArea_depth</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_2</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>390</x>
+     <y>314</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>397</x>
+     <y>507</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

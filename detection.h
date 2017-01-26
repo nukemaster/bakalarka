@@ -17,9 +17,11 @@
 
 #include <QImage>
 #include <QPixmap>
+#include <settings.h>
 
+#define PLAYER_MAXIMUM 4
 
-#define SETTINGS "detection.xml"
+class Settings;
 
 using namespace cv;
 using namespace std;
@@ -35,40 +37,25 @@ class Detection : public QWidget
 public:
     explicit Detection(QWidget *parent = 0);
     void run();
-    bool settings();
+    cv::Point2i coordinateConversion(int x, int y);
+    cv::Point2i coordinateBackConvertion(int x, int y);
     ~Detection();
 
+    void setSettings(Settings *value);
+    void initPlayersPoints();
+
+public slots:
+    int playerOnCoordinates(int x, int y);
+
 signals:
-    void newCoordinates(int x, int y);
+    void newCoordinates(int x, int y, bool inTouchArea);
+    void newRawCoordinates(int x, int y, bool inTouchArea);
 
 private:
-    Ui::Detection *ui;
+    void inputCorection();
 
-    ///<Input Options>
-    ///// orez
-    int minDepth;
-    int maxDepth;
-    int x1;
-    int x2;
-    int y1;
-    int y2;
-    ///// touchArea
-    int touchDepth;
-    int touchAreaX1;
-    int touchAreaX2;
-    int touchAreaY1;
-    int touchAreaY2;
-    ///// input
-    int inputDepthWidth;
-    int inputDepthHeight;
-    int inputDepthSize; //this->inputDepthWidth * this->inputDepthHeight
-    ///</input Options>
-    /// <CVProcessing>
-    bool erode1 = false;
-    bool dilate1 = false;
-    bool blur = false;
-    bool dilate2 = false;
-    /// </CVProcessing>
+    Ui::Detection *ui;
+    Settings *settings;
 
     /// <kinect>
     IDepthFrameReader*  d_reader;     // Kinect depth data source
@@ -78,13 +65,19 @@ private:
     void d_getKinectData();
     ///</kinect>
 
-    UINT16* d_buffer = NULL;
+    ///Player positions
+    std::vector<std::vector<cv::Point>> playersPoins; //prvni vector je vector hracu, druhy vector bodu patrici hraci
+
+    std::vector<std::vector<cv::Point>> playersHulls; //konvexHulls jednotlivych hracu
+
+    UINT16* d_buffer  = NULL;
     BYTE*   BGRADepth = NULL;
     Mat d_mat;
 
     void d_buffer2mat();
     std::vector<cv::Point> cvDetect(Mat d_mat);
     bool isPointInTouchArea(Point point);
+    bool isPointInTouchDepth(Point point);
     int pointDepth(Point point);
 };
 
@@ -92,7 +85,10 @@ class DetectionThread : public QThread
 {
 public:
     DetectionThread(Detection * detection);
+    ~DetectionThread();
     Detection * detection;
+
+    bool stop = false;
 
     void run();
 };

@@ -16,15 +16,26 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     detection.cpp \
     board.cpp \
-    tile.cpp
+    tile.cpp \
+    calibration.cpp \
+    radialmenu.cpp \
+    settings.cpp \
+    myscene.cpp \
+    myeventfilter.cpp
 
 HEADERS  += mainwindow.h \
     detection.h \
     board.h \
-    tile.h
+    tile.h \
+    calibration.h \
+    radialmenu.h \
+    settings.h \
+    myscene.h \
+    myeventfilter.h
 
 FORMS    += mainwindow.ui \
-    detection.ui
+    detection.ui \
+    calibration.ui
 
 INCLUDEPATH += $$(KINECTSDK20_DIR)/inc
 DEPENDPATH += $$(KINECTSDK20_DIR)/inc
@@ -41,6 +52,8 @@ DEPENDPATH += $$(OPENCV_DIR)/include
 
 win32:CONFIG(release, debug|release): LIBS += -L$$(OPENCV_DIR)/x86/vc12/lib/ -lopencv_world300
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$(OPENCV_DIR)/x86/vc12/lib/ -lopencv_world300d
+
+win32:LIBS += -luser32
 
 RESOURCES += \
     res.qrc

@@ -11,5 +11,8 @@
         <file>Img/tile_grid.png</file>
         <file>Img/tile_grid_green.png</file>
         <file>Img/tile_wall.png</file>
+        <file>Img/BP_kalibrace.png</file>
+        <file>Img/cursor_blue.png</file>
+        <file>Img/cursor_red.png</file>
     </qresource>
 </RCC>

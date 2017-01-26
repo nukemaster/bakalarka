@@ -68,14 +68,17 @@ void TileUnit::addPixmap(QPixmap *pixmap)
 
 void TileUnit::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    event->accept();
+    //event->accept();
     //QGraphicsPixmapItem::mousePressEvent(event);
     this->board->handleUnitClick(this);
 }
 
 void TileUnit::rollInitiative()
 {
-    this->initiative = rand();
+    /* initialize random seed: */
+
+
+    this->initiative = rand() % 19 + this->initiativeMod;
 }
 
 void TileUnit::endOfRound()
@@ -113,7 +116,7 @@ TileMap::TileMap(int x, int y, QString tileTypeName)
 
 void TileMap::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    event->accept();
+    //event->accept();
     this->sendClick();
     this->board->handleBoardClick(this);
 }

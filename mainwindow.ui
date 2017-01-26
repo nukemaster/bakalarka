@@ -6,14 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1052</width>
+    <width>1163</width>
     <height>693</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
@@ -24,32 +36,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>930</x>
-      <y>10</y>
-      <width>55</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>990</x>
-      <y>10</y>
-      <width>55</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="menuDM" native="true">
     <property name="enabled">
      <bool>true</bool>
@@ -58,17 +44,17 @@
      <rect>
       <x>10</x>
       <y>80</y>
-      <width>171</width>
+      <width>91</width>
       <height>371</height>
      </rect>
     </property>
     <widget class="QPushButton" name="pushButtonAddUnit">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>0</x>
        <y>20</y>
        <width>93</width>
-       <height>28</height>
+       <height>71</height>
       </rect>
      </property>
      <property name="text">
@@ -78,10 +64,10 @@
     <widget class="QPushButton" name="pushButtonStartCombat">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>320</y>
+       <x>0</x>
+       <y>287</y>
        <width>89</width>
-       <height>28</height>
+       <height>61</height>
       </rect>
      </property>
      <property name="text">
@@ -91,10 +77,10 @@
     <widget class="QPushButton" name="btn_editMap_menuToggle">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>70</y>
+       <x>0</x>
+       <y>130</y>
        <width>91</width>
-       <height>31</height>
+       <height>81</height>
       </rect>
      </property>
      <property name="text">
@@ -115,32 +101,19 @@
      <string>DM Button</string>
     </property>
    </widget>
-   <widget class="QLabel" name="labelBoardState">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>600</y>
-      <width>68</width>
-      <height>19</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>board State</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="widgetPlayer" native="true">
     <property name="geometry">
      <rect>
-      <x>850</x>
+      <x>480</x>
       <y>40</y>
-      <width>151</width>
+      <width>81</width>
       <height>441</height>
      </rect>
     </property>
     <widget class="QPushButton" name="pushButtonEndTurn">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>0</x>
        <y>20</y>
        <width>80</width>
        <height>25</height>
@@ -153,7 +126,7 @@
     <widget class="QPushButton" name="pushButtonMove">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>0</x>
        <y>80</y>
        <width>80</width>
        <height>25</height>
@@ -167,19 +140,19 @@
    <widget class="QWidget" name="box_startMenu" native="true">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>200</x>
       <y>70</y>
-      <width>221</width>
-      <height>371</height>
+      <width>91</width>
+      <height>291</height>
      </rect>
     </property>
     <widget class="QPushButton" name="pushButtonMapLoad">
      <property name="geometry">
       <rect>
-       <x>70</x>
+       <x>0</x>
        <y>30</y>
        <width>89</width>
-       <height>28</height>
+       <height>71</height>
       </rect>
      </property>
      <property name="text">
@@ -189,10 +162,10 @@
     <widget class="QPushButton" name="btn_newMap">
      <property name="geometry">
       <rect>
-       <x>69</x>
-       <y>74</y>
+       <x>0</x>
+       <y>200</y>
        <width>91</width>
-       <height>31</height>
+       <height>81</height>
       </rect>
      </property>
      <property name="text">
@@ -203,10 +176,10 @@
    <widget class="QWidget" name="box_newEmptyMapSetting" native="true">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>80</y>
+      <x>320</x>
+      <y>40</y>
       <width>161</width>
-      <height>341</height>
+      <height>441</height>
      </rect>
     </property>
     <widget class="QSlider" name="slider_newMap_X">
@@ -295,7 +268,7 @@
        <x>20</x>
        <y>250</y>
        <width>111</width>
-       <height>31</height>
+       <height>91</height>
       </rect>
      </property>
      <property name="text">
@@ -406,9 +379,9 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>290</y>
+       <y>360</y>
        <width>111</width>
-       <height>31</height>
+       <height>111</height>
       </rect>
      </property>
      <property name="text">
@@ -422,29 +395,16 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>40</y>
-      <width>141</width>
+      <x>110</x>
+      <y>90</y>
+      <width>81</width>
       <height>391</height>
      </rect>
     </property>
-    <widget class="QPushButton" name="btn_editMap_wall">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>20</y>
-       <width>91</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>wall</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="btn_editMap_end">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>0</x>
        <y>320</y>
        <width>80</width>
        <height>25</height>
@@ -454,19 +414,19 @@
       <string>Konec úprav</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btn_editMap_empty">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>60</y>
-       <width>80</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>empty</string>
-     </property>
-    </widget>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>310</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -474,8 +434,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1052</width>
-     <height>20</height>
+     <width>1163</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>

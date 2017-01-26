@@ -88,7 +88,9 @@ public:
 
     QVector<QPixmap *> pixmaps; //seznam moznych pixmap, 0 - defaultni
 
+    QString text;
     int initiative = 0;
+    int initiativeMod = 0;
     double speed = 30;
     double speedRemain = 30;
 };

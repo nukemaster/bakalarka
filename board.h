@@ -17,6 +17,8 @@
 
 #include <QEventLoop>
 
+#include <time.h>       /* time */
+
 #include "tile.h"
 
 #include <QDebug>
@@ -36,6 +38,7 @@ class Board : public QObject
 
 public:
     Board();
+    ~Board();
     bool loadMap(QString mapLocation);
     bool createEmptyMap(int width, int height);
     void boardToDefault();
@@ -79,7 +82,7 @@ public:
 
 
 public slots:
-    void getNewUnit();
+    void getNewUnit(QString unitLocation);
     void getDMMode(bool val);
     void getMapFileName(QString filename);
     void getStartCombat();
@@ -90,8 +93,9 @@ public slots:
 signals:
     //void sendBoard(QVector<int> board);
     void sendPixmapItem(QGraphicsPixmapItem * item);
-    void sendRangeItem(QGraphicsEllipseItem * item);
+    void sendRangeItem(QGraphicsItem * item);
     void sendStateChange(int state);
+    void sendTileTypesNames(QVector<QString> types);
 };
 
 class TileType
