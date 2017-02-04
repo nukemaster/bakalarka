@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Detection</class>
+ <widget class="QWidget" name="Detection">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>797</width>
+    <height>669</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QSlider" name="slider_inputCut_X1">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>30</y>
+     <width>651</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_inputCut_Y1">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>40</y>
+     <width>20</width>
+     <height>581</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>424</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="invertedAppearance">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_inputCut_X2">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>620</y>
+     <width>651</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_inputCut_Y2">
+   <property name="geometry">
+    <rect>
+     <x>750</x>
+     <y>40</y>
+     <width>18</width>
+     <height>581</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>424</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="invertedAppearance">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_touchArea_X1">
+   <property name="geometry">
+    <rect>
+     <x>149</x>
+     <y>70</y>
+     <width>521</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_touchArea_X2">
+   <property name="geometry">
+    <rect>
+     <x>149</x>
+     <y>570</y>
+     <width>531</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_touchArea_Y1">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>69</y>
+     <width>20</width>
+     <height>511</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>424</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="invertedAppearance">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_touchArea_Y2">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>70</y>
+     <width>18</width>
+     <height>511</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>424</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="invertedAppearance">
+    <bool>true</bool>
+   </property>
+   <property name="invertedControls">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_touchArea_depth">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>149</y>
+     <width>20</width>
+     <height>371</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>3000</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="invertedAppearance">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_save">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>480</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Ulozit</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_calibration_P1">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>150</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>P1</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_calibration_P2">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>200</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>P2</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_calibration_P3">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>250</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>P3</string>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_inpicCut_maxDepth">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>150</y>
+     <width>20</width>
+     <height>371</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>3000</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="invertedAppearance">
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

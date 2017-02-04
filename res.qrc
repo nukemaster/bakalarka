@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/Demo">
+        <file>Demo/map_test.xml</file>
+        <file>Demo/map_test/map_test.bmp</file>
+        <file>Demo/map_test/tile_grid.png</file>
+        <file>Demo/map_test/tile_wall.png</file>
+    </qresource>
+    <qresource prefix="/Img">
+        <file alias="unit_blue.png">Img/unit_blue.png</file>
+        <file alias="unit_blue_selected.png">Img/unit_blue_selected.png</file>
+        <file>Img/tile_grid.png</file>
+        <file>Img/tile_grid_green.png</file>
+        <file>Img/tile_wall.png</file>
+        <file>Img/BP_kalibrace.png</file>
+        <file>Img/cursor_blue.png</file>
+        <file>Img/cursor_red.png</file>
+    </qresource>
+</RCC>
