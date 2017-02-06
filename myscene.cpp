@@ -18,7 +18,7 @@ void MyScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void MyScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug()<<"MyScene press"<<event->source();
+    //qDebug()<<"MyScene press"<<event->source();
     if (TileSelectButton::selected != NULL)
         this->origPoint = event->scenePos();
     QGraphicsScene::mousePressEvent(event);
@@ -27,7 +27,7 @@ void MyScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug()<<"MyScene release"<<event->source();
+    //qDebug()<<"MyScene release"<<event->source();
     if ((TileSelectButton::selected != NULL) && itemToDraw != NULL) {
         QList<QGraphicsItem *> collides = itemToDraw->collidingItems();
         for (int i = 0; i < collides.size(); i++)

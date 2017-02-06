@@ -31,12 +31,12 @@ void Detection::run()
         if (this->isPointInTouchDepth(points[0])) {
             newCoordinates(point.x, point.y, true);
             newRawCoordinates(points[0].x, points[0].y, true);
-            qDebug()<<"true";
+            //qDebug()<<"true";
         }
         else {
             newCoordinates(point.x, point.y, false);
             newRawCoordinates(points[0].x, points[0].y, false);
-            qDebug()<<"false";
+            //qDebug()<<"false";
         }
 
     }
@@ -277,8 +277,8 @@ bool Detection::isPointInTouchDepth(Point point)
 
 int Detection::pointDepth(Point point)
 {
-    //todo:
-    qDebug()<<d_mat.at<float>(point.x, point.y);
+
+    //qDebug()<<d_mat.at<float>(point.x, point.y);
     return d_mat.at<float>(point.x, point.y);
 }
 

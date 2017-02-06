@@ -32,13 +32,35 @@ MainWindow::MainWindow(QWidget *parent) :
     //ui->label->setAttribute( Qt::WA_TransparentForMouseEvents );
 
 
-    ButtonLayer * m = (new ButtonLayer({"a", "b", "c", "d", "e", "f"}, this));
-    m->setGeometry(250, 880, /*m->width(), m->height()*/ 500,500);
-    m->show();
-    //m->setStyleSheet("background-color:black;");
+    RadialMenu2* mm2 = new RadialMenu2(this);
+    QPushButton * btn = new QPushButton("b");
+    mm2->addButton(btn);
+    btn = new QPushButton("b");
+    mm2->addButton(btn);
+    mm2->hide();
 
-    ButtonLayer * m2 = (new ButtonLayer({"a", "a", "a", "a", "a", "a"}, m));
-    m->setNextLayers({m2, m2, m2, m2, m2, m2});
+    RadialMenu2* mm = new RadialMenu2(this);
+    btn = new QPushButton("test");
+    mm->addButton(btn);
+    mm2->conectToButton(btn);
+    btn = new QPushButton("a");
+    mm->addButton(btn);
+    btn = new QPushButton("a");
+    mm->addButton(btn);
+    btn = new QPushButton("a");
+    mm->addButton(btn);
+    btn = new QPushButton("a");
+    mm->addButton(btn);
+    btn = new QPushButton("a");
+    mm->addButton(btn);
+    mm->calculateGeometry();
+    mm->setPos(600, 800);
+
+//    mm2->calculateGeometry();
+
+
+
+//    mm->conectToButton(btn);
 }
 
 MainWindow::~MainWindow()
@@ -138,7 +160,8 @@ void MainWindow::on_pushButtonAddUnit_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Load Unit"), "", tr("unit XML (*.xml)"));
-    this->sendNewUnit(fileName);
+    if (fileName != NULL)
+        this->sendNewUnit(fileName);
 }
 
 void MainWindow::on_pushButtonDM_clicked()
@@ -156,8 +179,10 @@ void MainWindow::on_pushButtonDM_clicked()
 void MainWindow::on_pushButtonMapLoad_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Open Map"), "", tr("map XML (*.xml)"));
-    this->sendMap(fileName);
+        tr("Open Map"), "", tr("XML (*.xml)"));
+    if (fileName != NULL) {
+        this->sendMap(fileName);
+    }
 }
 
 bool MainWindow::eventFilter(QObject *watched, QEvent *event)

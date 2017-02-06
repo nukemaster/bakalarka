@@ -23,7 +23,7 @@
 
 #include "tile.h"
 
-#include "radialmenu.h"
+#include "radialmenu2.h"
 #include "myscene.h"
 #include "settings.h"
 

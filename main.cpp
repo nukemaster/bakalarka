@@ -22,8 +22,8 @@ int main(int argc, char *argv[])
     MainWindow w;
     //a.installEventFilter(&w);
     w.setSettings(settings);
-    w.setFullScreen();
-
+    //w.setFullScreen();
+    w.show();
 
     Board board;
     w.columns = board.columns;
@@ -55,27 +55,27 @@ int main(int argc, char *argv[])
 
     board.loadDefaultPixmaps();
 
-    Detection* detection = new Detection();
-    detection->setSettings(settings);
-    DetectionThread* detectionThread = new DetectionThread(detection);
-    detectionThread->start();
+//    Detection* detection = new Detection();
+//    detection->setSettings(settings);
+//    DetectionThread* detectionThread = new DetectionThread(detection);
+//    detectionThread->start();
+////    QObject::connect(detection, SIGNAL(newCoordinates(int,int, bool)),
+////                     &w, SLOT(coordinatesFromDetection(int,int, bool)) );
 //    QObject::connect(detection, SIGNAL(newCoordinates(int,int, bool)),
-//                     &w, SLOT(coordinatesFromDetection(int,int, bool)) );
-    QObject::connect(detection, SIGNAL(newCoordinates(int,int, bool)),
-                     &w, SLOT(coordinatesFromDetection2(int,int, bool)) );
-    QObject::connect( &w, SIGNAL(playerIdOnXY(int,int)),
-                                detection, SLOT(playerOnCoordinates(int,int)));
+//                     &w, SLOT(coordinatesFromDetection2(int,int, bool)) );
+//    QObject::connect( &w, SIGNAL(playerIdOnXY(int,int)),
+//                                detection, SLOT(playerOnCoordinates(int,int)));
 
-    Calibration* calibration = new Calibration();
-    calibration->setSettings(settings);
-    calibration->show();
-    QObject::connect(detection, SIGNAL(newRawCoordinates(int,int,bool)),
-                     calibration, SLOT(coordinatesFromDetection(int,int,bool)));
+//    Calibration* calibration = new Calibration();
+//    calibration->setSettings(settings);
+//    calibration->show();
+//    QObject::connect(detection, SIGNAL(newRawCoordinates(int,int,bool)),
+//                     calibration, SLOT(coordinatesFromDetection(int,int,bool)));
 
     int ret = a.exec();
 
-    delete calibration;
-    delete detectionThread;
+//    delete calibration;
+//    delete detectionThread;
     delete settings;
 
 

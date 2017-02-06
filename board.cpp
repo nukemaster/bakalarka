@@ -407,7 +407,7 @@ void Board::getNewUnit(QString unitLocation)
     newUnitBuffer->speed        = speed;
     newUnitBuffer->speedRemain  = speed;
     newUnitBuffer->text         = str;
-    QObject::connect(newUnitBuffer, SIGNAL(sendClick()), this, SLOT(this->waitOnUnitClick->quit()) );
+    QObject::connect(newUnitBuffer, SIGNAL(sendClick()), this->waitOnUnitClick, SLOT(quit()) );
     this->boardUnits.append(newUnitBuffer);
     this->sendPixmapItem(newUnitBuffer);
 
