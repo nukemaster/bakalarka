@@ -46,7 +46,7 @@ protected:
     libfreenect2::Frame *ir;
     libfreenect2::Frame *depth;
 
-    bool loadKinectMatFromFile = true;
+    bool loadKinectMatFromFile = false;
 
 };
 

@@ -58,7 +58,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>AddUnit</string>
+      <string>Přidat jednotku</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButtonStartCombat">
@@ -71,7 +71,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>start Combat</string>
+      <string>Roll initiative</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btn_editMap_menuToggle">
@@ -143,7 +143,7 @@
       <x>200</x>
       <y>70</y>
       <width>91</width>
-      <height>291</height>
+      <height>511</height>
      </rect>
     </property>
     <widget class="QPushButton" name="pushButtonMapLoad">
@@ -156,7 +156,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>LoadMap</string>
+      <string>Načíst mapu</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btn_newMap">
@@ -169,7 +169,20 @@
       </rect>
      </property>
      <property name="text">
-      <string>new Map</string>
+      <string>Nová mapa</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_calibration">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>380</y>
+       <width>91</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Kalibrace</string>
      </property>
     </widget>
    </widget>
@@ -415,17 +428,14 @@
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QWidget" name="box_dicesRolls" native="true">
     <property name="geometry">
      <rect>
-      <x>930</x>
-      <y>310</y>
-      <width>81</width>
-      <height>16</height>
+      <x>689</x>
+      <y>50</y>
+      <width>141</width>
+      <height>451</height>
      </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
     </property>
    </widget>
   </widget>
@@ -435,7 +445,7 @@
      <x>0</x>
      <y>0</y>
      <width>1163</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

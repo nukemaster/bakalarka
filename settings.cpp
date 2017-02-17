@@ -54,6 +54,7 @@ Settings::Settings()
     this->touchModY = e.firstChildElement("touchMod").toElement().attribute("y").toInt();
     this->touchKX = e.firstChildElement("touchK").toElement().attribute("x").toDouble();
     this->touchKY = e.firstChildElement("touchK").toElement().attribute("y").toDouble();
+
     file.close();
 
     inputDepthSize = inputDepthHeight * inputDepthWidth;

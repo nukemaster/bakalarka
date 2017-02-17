@@ -1,5 +1,32 @@
 #include "myscene.h"
 
+MyScene::MyScene()
+{
+}
+
+void MyScene::setAceptTouchEvents()
+{
+    //    views().first()->setAttribute(Qt::WA_AcceptTouchEvents);
+}
+
+void MyScene::release()
+{
+    if ((TileSelectButton::selected != NULL) && itemToDraw != NULL) {
+        QList<QGraphicsItem *> collides = itemToDraw->collidingItems();
+        for (int i = 0; i < collides.size(); i++)
+        {
+            if (TileMap* tmp = dynamic_cast<TileMap *> (collides[i])) {
+
+                    tmp->changeTo(TileSelectButton::selected->text());
+            }
+        }
+
+        this->removeItem(itemToDraw);
+        delete itemToDraw;
+        itemToDraw = NULL;
+    }
+}
+
 void MyScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (TileSelectButton::selected != NULL) {
@@ -28,21 +55,7 @@ void MyScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     //qDebug()<<"MyScene release"<<event->source();
-    if ((TileSelectButton::selected != NULL) && itemToDraw != NULL) {
-        QList<QGraphicsItem *> collides = itemToDraw->collidingItems();
-        for (int i = 0; i < collides.size(); i++)
-        {
-            if (TileMap* tmp = dynamic_cast<TileMap *> (collides[i])) {
-
-                    tmp->changeTo(TileSelectButton::selected->text());
-            }
-        }
-
-        this->removeItem(itemToDraw);
-        delete itemToDraw;
-        itemToDraw = NULL;
-        //TileSelectButton::selected = NULL;
-    }
+    release();
     QGraphicsScene::mouseReleaseEvent(event);
     event->accept();
 }

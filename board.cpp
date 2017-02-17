@@ -10,7 +10,7 @@ Board::Board()
     this->setState(0);
     this->loadDefaultPixmaps();
 
-    srand (time(NULL));
+    srand (time(NULL)); //initialize random seed
 }
 
 Board::~Board()
@@ -27,7 +27,6 @@ Board::~Board()
     for (int i = 0; i < this->boardUnits.size(); i++) {
         delete this->boardUnits[i];
     }
-
 }
 
 /**
@@ -164,6 +163,15 @@ void Board::boardToDefault()
         delete tmp[i];
     }
     tmp.resize(0);
+}
+
+int Board::roll(int dNumber, int dType)
+{
+    int ret = 0;
+    for (int i = 0; i < dNumber; i++) {
+        ret += (rand() % dType) + 1;
+    }
+    return  ret;
 }
 
 void Board::handleUnitClick(TileUnit *tile)
@@ -416,6 +424,12 @@ void Board::getNewUnit(QString unitLocation)
     text->setPos(5, 0);
     //sendRangeItem(text);
 
+//    newUnitBuffer->radialMenu = new RadialMenu2();
+//    QPushButton* btn = new QPushButton("pohyb");
+//    QObject::connect(btn, SIGNAL(pressed()), this, SLOT(getMove()));
+////    newUnitBuffer->radialMenu->show();
+//    newUnitBuffer->radialMenu->addButton(btn);
+
     this->setState(-1); //nastaveni stavu hraci plochy pro vlozeni nove jednotky
 }
 
@@ -452,7 +466,7 @@ void Board::getStartCombat()
                 }
         );
 
-    this->boardUnits.first()->setPixmap(1);
+    this->boardUnits.first()->startTurn();
 
     setState(1);
 }
@@ -460,13 +474,13 @@ void Board::getStartCombat()
 void Board::getEndTurn()
 {
     this->boardToDefault();
-    this->boardUnits[this->onTurn]->setPixmap(0);
+    this->boardUnits[this->onTurn]->endTurn();
     this->onTurn++;
     if (this->onTurn >= this->boardUnits.size()) {
         this->endOfRound();
         this->onTurn = 0;
     }
-    this->boardUnits[this->onTurn]->setPixmap(1);
+    this->boardUnits[this->onTurn]->startTurn();
 }
 
 void Board::getMove()
@@ -486,6 +500,7 @@ void Board::getMove()
     while ((map = this->getMapTile())->maxRangeRemain < 0.0) {    }
     unit->setPos(map->x, map->y);
     unit->speedRemain = mapOnXY(map->x, map->y)->maxRangeRemain;
+    unit->setRadialMenuPos();
     this->boardToDefault(); //vycisteni hraci plochy
 }
 

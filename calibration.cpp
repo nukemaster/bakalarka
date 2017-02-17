@@ -119,6 +119,20 @@ void Calibration::touchEvent(QTouchEvent * event)
     waitOnTouchPoint->exit();
 }
 
+void Calibration::getMat(Mat* mat)
+{
+    if (mat == NULL) {
+        qDebug()<<"null";
+    }
+    else {
+        QImage image( mat->data,
+                      mat->cols, mat->rows,
+                      static_cast<int>(mat->step),
+                      QImage::Format_Indexed8 );
+        ui->label_3->setPixmap(QPixmap::fromImage( image ));
+    }
+}
+
 bool Calibration::event(QEvent *event)
 {
     if (event->type() == QEvent::TouchBegin) {
@@ -292,20 +306,27 @@ void Calibration::on_pushButton_clicked()
         return;
     }
 
+    //normalizace souradnic
+    inTouchPoint1.setX(inTouchPoint1.x() * (4095.0 / 1920.0));
+    inTouchPoint2.setX(inTouchPoint2.x() * (4095.0 / 1920.0));
+    inTouchPoint1.setY(inTouchPoint1.y() * (4095.0 / 1080.0));
+    inTouchPoint2.setY(inTouchPoint2.y() * (4095.0 / 1080.0));
+    //vypocet o kolik je obraz posunut
     touchXmod = inTouchPoint1.x();
     touchYmod = inTouchPoint1.y();
+    //vypocet o kolik je obraz zmensen
     touchWidth = (inTouchPoint2.x() - touchXmod);
     touchHeight = (inTouchPoint2.y() - touchYmod);
-    touchKX = 1920 / touchWidth;
-    touchKY = 1080 / touchHeight;
+    touchKX = 4095.0 / touchWidth;
+    touchKY = 4095.0 / touchHeight;
 
     this->ui->label_calibration_values->setText(/*ui->label_calibration_values->text() +*/
                                           "\ntouchMod> x: " + QString::number(this->touchXmod) +
                                           "\n y: " + QString::number(this->touchYmod) +
                                           "\ntouchSize> width: " + QString::number(this->touchWidth) +
                                           "\n height: " + QString::number(this->touchHeight) +
-                                          "\ntouchK> x: " + QString::number(this->touchKX) +
-                                          "\n y: " + QString::number(this->touchKY)) ;
+                                          "\ntouchK> x: " + QString("%1").arg(this->touchKX) +
+                                          "\n y: " + QString("%1").arg(this->touchKY)) ;
 
     qDebug()<<touchXmod<<touchYmod<<touchKX<<touchKY;
 

@@ -56,6 +56,15 @@ TileUnit::TileUnit(QPixmap *pixmap)
     this->pixmaps.append(pixmap);
 }
 
+void TileUnit::setRadialMenuPos()
+{
+    QGraphicsView *v = scene()->views().first();
+    QPointF sceneP = mapToScene( boundingRect().topLeft());
+    QPoint viewP =  v->mapFromScene(sceneP);
+    radialMenu->setPos(v->viewport()->mapToGlobal(viewP).x() + boundingRect().width()/2,
+                             v->viewport()->mapToGlobal(viewP).y() + boundingRect().height()/2);
+}
+
 void TileUnit::setPixmap(int id)
 {
     Tile::setPixmap(*(this->pixmaps[id]));
@@ -81,9 +90,25 @@ void TileUnit::rollInitiative()
     this->initiative = rand() % 19 + this->initiativeMod;
 }
 
+void TileUnit::startTurn()
+{
+    setPixmap(1);
+    setRadialMenuPos();
+    radialMenu->show();
+}
+
+void TileUnit::endTurn()
+{
+    setPixmap(0);
+    radialMenu->hide();
+}
+
 void TileUnit::endOfRound()
 {
     this->speedRemain = this->speed;
+    action = true;
+    bAction = true;
+    reaction = true;
 }
 
 

@@ -5,7 +5,10 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 #include <QObject>
+#include <QGraphicsView>
 #include "board.h"
+
+#include "radialmenu2.h"
 
 #define TILESIZE 50
 
@@ -76,23 +79,32 @@ public:
     TileUnit();
     TileUnit(QPixmap *pixmap);
 
+    void setRadialMenuPos();
+
     void setPixmap(int id);
     void addPixmap(QPixmap *pixmap);
 
     void mousePressEvent(QGraphicsSceneMouseEvent * event);
 
     void rollInitiative();
+    void startTurn(); //
+    void endTurn();
     void endOfRound();
 
     void showRange(int range);
 
     QVector<QPixmap *> pixmaps; //seznam moznych pixmap, 0 - defaultni
+    RadialMenu2* radialMenu;
 
     QString text;
     int initiative = 0;
     int initiativeMod = 0;
     double speed = 30;
     double speedRemain = 30;
+
+    bool action = true;
+    bool bAction = true;
+    bool reaction = true;
 };
 
 #endif // TILE_H

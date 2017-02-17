@@ -90,6 +90,8 @@ public slots:
     void getMove();
     void getNewEmptyMap(int x, int y);
 
+    int roll(int dNumber, int dType);  //roll nNumber d dType
+
 signals:
     //void sendBoard(QVector<int> board);
     void sendPixmapItem(QGraphicsPixmapItem * item);

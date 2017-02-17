@@ -94,6 +94,8 @@ protected:
     bool event(QEvent * event);
     void touchEvent(QTouchEvent *event);
 private slots:
+    void getMat(cv::Mat *mat);
+
     void on_slider_inputCut_Y1_valueChanged(int value);
     void on_slider_inputCut_X1_valueChanged(int value);
     void on_slider_inputCut_Y2_valueChanged(int value);

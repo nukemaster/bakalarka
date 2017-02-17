@@ -16,7 +16,12 @@ void Detection::run()
     std::vector<cv::Point> points;
     cv::Point2i point;
 
+    if (!d_mat.empty()) {
+        tmp = false;
+        d_mat.release();
+    }
     this->d_mat = kinect->getDepthFrame();
+    tmp = true;
     inputCorection();
     points = this->cvDetect(d_mat);
 
@@ -38,16 +43,12 @@ void Detection::run()
             newRawCoordinates(points[0].x, points[0].y, false);
             //qDebug()<<"false";
         }
-
     }
     else {
         newCoordinates(-1, -1, false);
     }
 
-    d_mat.release();
-
-
-
+//    d_mat.release();
 }
 
 /**
@@ -87,12 +88,16 @@ std::vector<cv::Point> Detection::cvDetect(Mat d_mat)
     Mat drawing = Mat::zeros( d_size, CV_8UC3 ); //vytvoreni plochy pro vykresleni vysledky hledani
     std::vector<bool> p = {false, false, false, false};
 
-    cv::rectangle(drawing, cv::Point(settings->touchAreaX1, settings->touchAreaY1), cv::Point(settings->touchAreaX2, settings->touchAreaY2), cv::Scalar(255, 255, 0));      //vykreslen oblasti dotyku
-
     //thresholding
     cv::inRange(d_mat, Scalar(settings->minDepth), Scalar(settings->maxDepth), d_mat);
-    cv::imshow("depth", d_mat);
+    d_mat.convertTo(drawing, CV_8UC3);
+
+
+    cv::rectangle(drawing, cv::Point(settings->touchAreaX1, settings->touchAreaY1), cv::Point(settings->touchAreaX2, settings->touchAreaY2), cv::Scalar(255, 255, 0));      //vykreslen oblasti dotyku
+    sendMat(&drawing);
+//    cv::imshow("depth", d_mat);
 //    waitKey(0);
+
 
     //odstranení šumu
     int erosion_size = 1;
@@ -248,7 +253,7 @@ std::vector<cv::Point> Detection::cvDetect(Mat d_mat)
         }
     }
 
-    cv::imshow("windowName2", drawing);
+//    cv::imshow("windowName2", drawing);
 
 //    waitKey(0);
     drawing.release();
@@ -277,9 +282,10 @@ bool Detection::isPointInTouchDepth(Point point)
 
 int Detection::pointDepth(Point point)
 {
-
+    while (tmp == false) {
     //qDebug()<<d_mat.at<float>(point.x, point.y);
-    return d_mat.at<float>(point.x, point.y);
+        return d_mat.at<float>(point.x, point.y);
+    }
 }
 
 Detection::~Detection()

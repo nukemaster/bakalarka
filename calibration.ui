@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>787</width>
+    <width>1322</width>
     <height>659</height>
    </rect>
   </property>
@@ -354,8 +354,8 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>240</x>
-     <y>380</y>
+     <x>130</x>
+     <y>450</y>
      <width>71</width>
      <height>41</height>
     </rect>
@@ -415,10 +415,10 @@
   <widget class="QLabel" name="label_calibration_values">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>430</y>
+     <x>430</x>
+     <y>180</y>
      <width>201</width>
-     <height>101</height>
+     <height>241</height>
     </rect>
    </property>
    <property name="text">
@@ -483,6 +483,19 @@
     <string>TextLabel</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>760</x>
+     <y>30</y>
+     <width>512</width>
+     <height>424</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
   <zorder>slider_inputCut_Y2</zorder>
   <zorder>slider_inputCut_Y1</zorder>
   <zorder>slider_touchArea_Y1</zorder>
@@ -512,6 +525,7 @@
   <zorder>label_tP2_val</zorder>
   <zorder>calibrationImage</zorder>
   <zorder>clicked_indicator</zorder>
+  <zorder>label_3</zorder>
  </widget>
  <resources>
   <include location="res.qrc"/>

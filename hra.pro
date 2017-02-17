@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml widgets
+QT       += core gui xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     myscene.cpp \
     myeventfilter.cpp \
     kinect.cpp \
-    radialmenu2.cpp
+    radialmenu2.cpp \
+    dicebutton.cpp
 
 HEADERS  += mainwindow.h \
     detection.h\
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     myscene.h \
     myeventfilter.h \
     kinect.h \
-    radialmenu2.h
+    radialmenu2.h \
+    dicebutton.h
 
 FORMS    += mainwindow.ui \
     detection.ui \

@@ -5,7 +5,7 @@
 #include <QThread>
 
 #include "opencv2/core/core.hpp"
-#include "opencv2/highgui/highgui.hpp"
+//#include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 
 #include <QDebug>
@@ -31,6 +31,7 @@ class Detection : public QWidget
     Q_OBJECT
 
 public:
+    bool tmp = false;
     explicit Detection(QWidget *parent = 0);
     void run();
     cv::Point2i coordinateConversion(int x, int y);
@@ -47,6 +48,7 @@ public slots:
 signals:
     void newCoordinates(int x, int y, bool inTouchArea);
     void newRawCoordinates(int x, int y, bool inTouchArea);
+    void sendMat(cv::Mat* mat);
 
 private:
     void inputCorection();

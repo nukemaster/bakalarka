@@ -14,5 +14,15 @@
         <file>Img/BP_kalibrace.png</file>
         <file>Img/cursor_blue.png</file>
         <file>Img/cursor_red.png</file>
+        <file>Img/d20.png</file>
+        <file>Img/d4.png</file>
+        <file>Img/d6.png</file>
+        <file>Img/d8.png</file>
+        <file>Img/d10.png</file>
+        <file>Img/d12.png</file>
+        <file>Img/old-paper-texture.jpg</file>
+        <file>Img/fantasy_button_active.png</file>
+        <file>Img/fantasy_button_clicked.png</file>
+        <file>Img/fantasy_button_normal.png</file>
     </qresource>
 </RCC>

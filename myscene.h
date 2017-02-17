@@ -14,12 +14,13 @@ class TileSelectButton;
 class MyScene : public QGraphicsScene
 {
 public:
-
+    MyScene();
+    void setAceptTouchEvents();
     ///DRAWING
     int drawMode = 0;
     QPointF origPoint;
     QGraphicsLineItem* itemToDraw = NULL;
-
+    void release();
 
 private:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);

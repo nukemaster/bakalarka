@@ -26,6 +26,7 @@
 #include "radialmenu2.h"
 #include "myscene.h"
 #include "settings.h"
+#include "dicebutton.h"
 
 #include <QDesktopWidget>
 
@@ -64,6 +65,8 @@ public:
 
     int dungeonMaster = 2;
 
+    void styleToFantasyBtn(QPushButton* btn);
+
 public slots:
     void coordinatesFromDetection(int x, int y, bool inClickArea);
     void coordinatesFromDetection2(int x, int y, bool inClickArea);
@@ -88,6 +91,9 @@ private slots:
     void on_btn_editMap_menuToggle_clicked();
     void on_btn_editMap_end_clicked();
     void on_btn_newMap_back_clicked();
+    int getRoll(int n, int t);
+
+    void on_btn_calibration_clicked();
 
 signals:
     void sendNewUnit(QString unitFileName);
@@ -99,6 +105,8 @@ signals:
     void sendNewMap(int x, int y);
 
     int playerIdOnXY(int x, int y);
+    int roll(int dNumbet, int dType);
+    int showCalibration();
 
 private:
     Ui::MainWindow *ui;
@@ -117,6 +125,8 @@ protected:
     void touchBeginEvent(QTouchEvent *event);
     void touchUpdateEvent(QTouchEvent *event);
     void touchEndEvent(QTouchEvent *event);
+
+    void createRollMenu();
 
 };
 
