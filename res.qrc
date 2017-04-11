@@ -24,5 +24,13 @@
         <file>Img/fantasy_button_active.png</file>
         <file>Img/fantasy_button_clicked.png</file>
         <file>Img/fantasy_button_normal.png</file>
+        <file>Img/table_texture.jpg</file>
+        <file>Img/sigma.png</file>
+        <file>Img/buttonSmall.png</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>icons/moveIcon.png</file>
+        <file>icons/EndOfTurnScaled.png</file>
+        <file>icons/emptyButton.png</file>
     </qresource>
 </RCC>

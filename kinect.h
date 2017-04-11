@@ -7,7 +7,7 @@
 #include <libfreenect2/frame_listener_impl.h>
 
 #include "opencv2/core/core.hpp"
-#include "opencv2/highgui/highgui.hpp"
+//#include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 
 #include <iostream>
@@ -46,7 +46,7 @@ protected:
     libfreenect2::Frame *ir;
     libfreenect2::Frame *depth;
 
-    bool loadKinectMatFromFile = false;
+    bool loadKinectMatFromFile = true; //debug
 
 };
 

@@ -7,14 +7,17 @@ MyEventFilter::MyEventFilter() : QObject()
 
 bool MyEventFilter::eventFilter(QObject * object, QEvent * event)
 {
-    if ((event->type() == QEvent::MouseButtonPress)||(event->type() == QEvent::MouseButtonRelease)||(event->type() == QEvent::MouseMove)) {
-        qDebug()<<"eventFilter"<<event->type()<<((QMouseEvent*)event)->pos()<<((QMouseEvent*)event)->source();
-        if (dynamic_cast<QMouseEvent *>(event)->source() == Qt::MouseEventSynthesizedBySystem) {
-            //qDebug()<<"eventFilter filter event synthetized by system";
-            event->accept();
-            return true;
-        }
-    }
-    return false;
+//    if ((event->type() == QEvent::MouseButtonPress)||(event->type() == QEvent::MouseButtonRelease)||(event->type() == QEvent::MouseMove)) {
+//        qDebug()<<"eventFilter"<<event->type()<<((QMouseEvent*)event)->pos()<<((QMouseEvent*)event)->source();
+//        if (dynamic_cast<QMouseEvent *>(event)->source() == Qt::MouseEventSynthesizedBySystem) {
+//            //qDebug()<<"eventFilter filter event synthetized by system";
+////            event->accept();
+//            return true;
+//        }
+//    }
+//    if (event->type() == QEvent::TouchBegin) {
+//        qDebug()<<"eventFilter> "<<dynamic_cast<QTouchEvent*>(event)->target();
+//    }
+//    return false;
 }
 

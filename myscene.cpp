@@ -1,7 +1,7 @@
 #include "myscene.h"
 
 MyScene::MyScene()
-{
+{        
 }
 
 void MyScene::setAceptTouchEvents()
@@ -40,7 +40,8 @@ void MyScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         itemToDraw->setLine(origPoint.x(), origPoint.y(),event->scenePos().x(),event->scenePos().y());
         this->addItem(itemToDraw);
     }
-    event->accept();
+    QGraphicsScene::mouseMoveEvent(event);
+//    event->accept();
 }
 
 void MyScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -49,7 +50,7 @@ void MyScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if (TileSelectButton::selected != NULL)
         this->origPoint = event->scenePos();
     QGraphicsScene::mousePressEvent(event);
-    event->accept();
+//    event->accept();
 }
 
 void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -57,5 +58,43 @@ void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     //qDebug()<<"MyScene release"<<event->source();
     release();
     QGraphicsScene::mouseReleaseEvent(event);
-    event->accept();
+    //    event->accept();
+}
+
+
+
+
+MyGraphicsView::MyGraphicsView() : QGraphicsView()
+{
+    setAttribute(Qt::WA_AcceptTouchEvents);
+}
+
+bool MyGraphicsView::event(QEvent *event)
+{
+//    qDebug()<<"eventView" << event->type();
+    if ((event->type() == QEvent::TouchBegin)||(event->type() == QEvent::TouchUpdate)||(event->type() == QEvent::TouchEnd)) {
+        if (!event->isAccepted()) {
+            touchEvent(event);
+            event->accept();
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+//    return QGraphicsView::event(event);
+}
+
+void MyGraphicsView::touchEvent(QEvent *event)
+{
+    QTouchEvent* tevent = dynamic_cast<QTouchEvent*>(event);
+    qDebug() << tevent->touchPoints().size();
+    if (tevent->touchPoints().size() > 1) {
+        this->setDragMode(QGraphicsView::ScrollHandDrag);
+        this->setInteractive(false);
+    }
+    else {
+        this->setDragMode(QGraphicsView::NoDrag);
+        this->setInteractive(true);
+    }
 }

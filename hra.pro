@@ -14,7 +14,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     detection.cpp\
-    calibration.cpp\
     mainwindow.cpp \
     board.cpp \
     tile.cpp \
@@ -23,11 +22,21 @@ SOURCES += main.cpp\
     myeventfilter.cpp \
     kinect.cpp \
     radialmenu2.cpp \
-    dicebutton.cpp
+    dicebutton.cpp \
+    labelbutton.cpp \
+    filedialog.cpp \
+    tilemap.cpp \
+    tileunit.cpp \
+    action.cpp \
+    dice.cpp \
+    actionattack.cpp \
+    enums.cpp \
+    actionvssave.cpp \
+    actionaoe.cpp \
+    combatdialog.cpp
 
 HEADERS  += mainwindow.h \
     detection.h\
-    calibration.h\
     board.h \
     tile.h \
     settings.h \
@@ -35,11 +44,20 @@ HEADERS  += mainwindow.h \
     myeventfilter.h \
     kinect.h \
     radialmenu2.h \
-    dicebutton.h
+    dicebutton.h \
+    labelbutton.h \
+    filedialog.h \
+    tilemap.h \
+    tileunit.h \
+    action.h \
+    dice.h \
+    enums.h \
+    actionattack.h \
+    actionvssave.h \
+    actionaoe.h \
+    combatdialog.h
 
-FORMS    += mainwindow.ui \
-    detection.ui \
-    calibration.ui
+FORMS    += mainwindow.ui
 
 #openCV
 unix:!macx: LIBS += -L$$OPENCV_PATH/lib/ -lopencv_core

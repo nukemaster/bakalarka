@@ -1,6 +1,9 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+class TileMap;
+class TileType;
+
 #include <QObject>
 #include <QImage>
 #include <QColor>
@@ -8,18 +11,23 @@
 #include <QMap>
 #include <QGraphicsPixmapItem>
 
+
 #include<QBrush>
 
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
 #include <QDomDocument>
+#include <QXmlStreamWriter>
 
 #include <QEventLoop>
 
 #include <time.h>       /* time */
 
-#include "tile.h"
+//#include "tile.h"
+#include "tileunit.h"
+#include "tilemap.h"
+
 
 #include <QDebug>
 
@@ -27,10 +35,8 @@
 #define DEFAULT_RANGE_INDICATOR ":/Img/Img/tile_grid_green.png"
 #define DEFAULT_WALL_TILE_IMG ":/Img/Img/tile_wall.png"
 
-class Tile;
-class TileUnit;
 class TileMap;
-class TileType;
+class TileUnit;
 
 class Board : public QObject
 {
@@ -40,6 +46,7 @@ public:
     Board();
     ~Board();
     bool loadMap(QString mapLocation);
+    void saveMap(QString mapName = "testSave");
     bool createEmptyMap(int width, int height);
     void boardToDefault();
 
@@ -73,7 +80,7 @@ public:
 
     void setState(int value);
 
-    TileMap * getMapTile();
+
     TileMap * lastClickMap = NULL;
     TileUnit * lastClickUnit = NULL;
 
@@ -82,6 +89,8 @@ public:
 
 
 public slots:
+    TileMap * getMapTile();
+    TileUnit * getUnitTile();
     void getNewUnit(QString unitLocation);
     void getDMMode(bool val);
     void getMapFileName(QString filename);
@@ -100,15 +109,5 @@ signals:
     void sendTileTypesNames(QVector<QString> types);
 };
 
-class TileType
-{
-public:
-    TileType(QString pixmapPath, bool blocking, bool difficultTerrain, QString color = NULL);
-
-    QPixmap * pixmap;
-    QString color;
-    bool blocking;
-    bool difficultTerrain;
-};
 
 #endif // BOARD_H

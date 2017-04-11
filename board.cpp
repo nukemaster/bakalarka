@@ -139,6 +139,7 @@ bool Board::loadMap(QString mapLocation)
             while (i != tileTypes.constEnd()) {
                 if (QColor(image.pixel(x, y)).name() == i.value()->color ) {
                     this->boardMap[x+ yplus] = new TileMap(x, y, i.value());
+                    this->boardMap[x+ yplus]->color = i.value()->color;
                     this->sendPixmapItem(this->boardMap[x+ yplus]);
                     QObject::connect(this->boardMap[x+ yplus], SIGNAL(sendClick()), this->waitOnMapClick, SLOT(quit()) );
                     break;
@@ -148,8 +149,60 @@ bool Board::loadMap(QString mapLocation)
         }
     }
     this->setState(-1); //do DM modu
-
+saveMap();
     return true;
+}
+
+void Board::saveMap(QString mapName)
+{
+    QFile file("maps/" + mapName + ".xml");
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+            return;
+
+    QImage map(columns, rows, QImage::Format_ARGB32);
+    for (int y = 0; y < this->rows; y++) {
+        for (int x = 0; x < this->columns; x++) {
+            map.setPixelColor(x, y, QColor(dynamic_cast<TileMap*>(this->tileOnXY(x, y))->color));
+            qDebug()<<x<<y<<this->tileOnXY(x, y)->x<<this->tileOnXY(x, y)->y<<QColor(dynamic_cast<TileMap*>(this->tileOnXY(x, y))->color);
+        }
+    }
+
+    if (!QDir("maps/" + mapName).exists()) {
+        QDir().mkdir("maps/" + mapName);
+    }
+    QFile f("maps/" + mapName + "/" + mapName + ".png");
+    f.open(QIODevice::WriteOnly);
+    map.save(&f);
+
+    QXmlStreamWriter stream(&file);
+    stream.setAutoFormatting(true);
+    stream.writeStartDocument();
+
+    stream.writeStartElement("map");
+        stream.writeAttribute("file", mapName + "/" + mapName + ".png");
+        stream.writeTextElement("preview", mapName + "/" + mapName + ".png");
+        for(QMap<QString, TileType *>::iterator i=tileTypes.begin(); i!=tileTypes.end(); ++i) {
+            if (i.key() == "range")
+                continue;
+            stream.writeStartElement("tile");
+                stream.writeAttribute("color", i.value()->color);
+                stream.writeStartElement("pixmap");
+                    stream.writeAttribute("name", i.key());
+                    QFile f("maps/" + mapName + "/" + i.key() + ".png");
+                    f.open(QIODevice::WriteOnly);
+//                    QPixmap pixmap(i.value()->pixmap);
+                    i.value()->pixmap->save(&f);
+                    stream.writeCharacters(mapName + "/" + i.key() + ".png");
+                stream.writeEndElement();
+                stream.writeTextElement("blocking", (i.value()->blocking)?"1":"0");
+                stream.writeTextElement("difficultTerrain", (i.value()->difficultTerrain)?"1":"0");
+            stream.writeEndElement();
+        }
+    stream.writeEndElement();
+
+    stream.writeEndDocument();
+    file.close();
+
 }
 
 void Board::boardToDefault()
@@ -177,6 +230,7 @@ int Board::roll(int dNumber, int dType)
 void Board::handleUnitClick(TileUnit *tile)
 {
     this->lastClickUnit = tile;
+    waitOnUnitClick->exit();
 }
 
 void Board::handleBoardClick(TileMap * tile)
@@ -226,7 +280,7 @@ Tile * Board::tileOnXY(int x, int y)
 {
     if ((x < 0)||(x >= columns)||(y < 0)||(y >= rows))
         return NULL;
-    return this->boardMap[x + y * this->rows];
+    return this->boardMap[x + y * this->columns];
 }
 
 void Board::loadDefaultPixmaps()
@@ -373,64 +427,41 @@ TileMap *Board::getMapTile()
     this->setState(-2);
     this->waitOnMapClick->exec(); //cekani nez nekdo klikne na tile
     if (lastClickMap == NULL)
-        qDebug()<<"chybaaaaa";
+        qDebug()<<"err> lastClickMap == NULL";
     TileMap * tmp = lastClickMap;
     lastClickMap = NULL;
     this->setState(this->stateTmp);
     return tmp;
 }
 
+TileUnit *Board::getUnitTile()
+{
+    this->stateTmp = state;
+    this->setState(-2);
+    this->waitOnUnitClick->exec(); //cekani nez nekdo klikne na tile
+    if (lastClickUnit == NULL)
+        qDebug()<<"err> lastClickUnit == NULL";
+    TileUnit * tmp = lastClickUnit;
+    lastClickUnit = NULL;
+    this->setState(this->stateTmp);
+    return tmp;
+}
+
 void Board::getNewUnit(QString unitLocation)
 {
+    int tmpState = state;
     this->setState(-2);
     TileMap* mapTile = NULL;
     while (!canGoOnTile(mapTile)) {
         mapTile = this->getMapTile();  //zadani na ktere pole se bude vkladat
     }
 
-    QFile file(unitLocation);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-            return;
-    //parsrovani XML souboru
-    QDomDocument xml("setting");
-    xml.setContent(&file);
-    QDomElement e;
-
-    e = xml.firstChildElement("unit");
-
-    QString path = QFileInfo(file).absoluteDir().absolutePath() + "/";
-
-         int speed              = e.firstChildElement("speed").toElement().text().toInt();
-         int initiative         = e.firstChildElement("initiative").toElement().text().toInt();
-         QString imgNormal      = path + e.firstChildElement("normalPixmap").toElement().text();
-         QString imgSelected    = path + e.firstChildElement("selectedPixmap").toElement().text();
-         QString str            = e.firstChildElement("string").text();
-
-    file.close();
-
-    TileUnit *newUnitBuffer = new TileUnit(new QPixmap(imgNormal));
-    newUnitBuffer->addPixmap(new QPixmap(imgSelected));
+    TileUnit *newUnitBuffer = new TileUnit(unitLocation);
+    boardUnits.append(newUnitBuffer);
+    sendPixmapItem(newUnitBuffer);
     newUnitBuffer->setPos(mapTile->x, mapTile->y);
-    newUnitBuffer->initiativeMod   = initiative;
-    newUnitBuffer->speed        = speed;
-    newUnitBuffer->speedRemain  = speed;
-    newUnitBuffer->text         = str;
-    QObject::connect(newUnitBuffer, SIGNAL(sendClick()), this->waitOnUnitClick, SLOT(quit()) );
-    this->boardUnits.append(newUnitBuffer);
-    this->sendPixmapItem(newUnitBuffer);
 
-    QGraphicsTextItem* text = new QGraphicsTextItem(QString(str), newUnitBuffer);
-    text->setScale(2);
-    text->setPos(5, 0);
-    //sendRangeItem(text);
-
-//    newUnitBuffer->radialMenu = new RadialMenu2();
-//    QPushButton* btn = new QPushButton("pohyb");
-//    QObject::connect(btn, SIGNAL(pressed()), this, SLOT(getMove()));
-////    newUnitBuffer->radialMenu->show();
-//    newUnitBuffer->radialMenu->addButton(btn);
-
-    this->setState(-1); //nastaveni stavu hraci plochy pro vlozeni nove jednotky
+    this->setState(tmpState); //nastaveni stavu hraci plochy pro vlozeni nove jednotky
 }
 
 void Board::getDMMode(bool val)
@@ -473,6 +504,7 @@ void Board::getStartCombat()
 
 void Board::getEndTurn()
 {
+    qDebug()<<"Board::getEndTurn";
     this->boardToDefault();
     this->boardUnits[this->onTurn]->endTurn();
     this->onTurn++;
@@ -511,10 +543,10 @@ void Board::getNewEmptyMap(int x, int y)
 
 
 
-TileType::TileType(QString pixmapPath, bool blocking, bool difficultTerrain, QString color)
-{
-    this->pixmap = new QPixmap(pixmapPath);
-    this->blocking = blocking;
-    this->difficultTerrain = difficultTerrain;
-    this->color = color;
-}
+//TileType::TileType(QString pixmapPath, bool blocking, bool difficultTerrain, QString color)
+//{
+//    this->pixmap = new QPixmap(pixmapPath);
+//    this->blocking = blocking;
+//    this->difficultTerrain = difficultTerrain;
+//    this->color = color;
+//}

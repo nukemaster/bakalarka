@@ -4,12 +4,23 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsPixmapItem>
-#include "tile.h"
-
+#include "tilemap.h"
+#include <QTouchEvent>
 
 #include <QPushButton>
 
+#include <QGraphicsView>
+#include <QScroller>
+
 class TileSelectButton;
+
+class MyGraphicsView : public QGraphicsView
+{
+public:
+    MyGraphicsView();
+    bool event(QEvent *event);
+    void touchEvent(QEvent* event);
+};
 
 class MyScene : public QGraphicsScene
 {
@@ -25,7 +36,7 @@ public:
 private:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);    
 };
 
 class TileSelectButton : public QPushButton

@@ -5,7 +5,7 @@
 #include <QThread>
 
 #include "opencv2/core/core.hpp"
-//#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 
 #include <QDebug>
@@ -31,7 +31,7 @@ class Detection : public QWidget
     Q_OBJECT
 
 public:
-    bool tmp = false;
+    bool d_matMutex = false;
     explicit Detection(QWidget *parent = 0);
     void run();
     cv::Point2i coordinateConversion(int x, int y);
@@ -46,7 +46,7 @@ public slots:
     bool getDepthFrame(cv::Mat* d_mat);
 
 signals:
-    void newCoordinates(int x, int y, bool inTouchArea);
+    void newCoordinates(int x, int y, int playerID);
     void newRawCoordinates(int x, int y, bool inTouchArea);
     void sendMat(cv::Mat* mat);
 
@@ -58,10 +58,7 @@ private:
 
     /// <kinect>
     Kinect* kinect;
-//    IDepthFrameReader*  d_reader;     // Kinect depth data source
-//    IColorFrameReader*  c_reader;     // Kinect color data source
 
-    ///</kinect>
 
     ///Player positions
     std::vector<std::vector<cv::Point>> playersPoins; //prvni vector je vector hracu, druhy vector bodu patrici hraci

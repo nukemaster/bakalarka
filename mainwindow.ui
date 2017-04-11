@@ -88,19 +88,6 @@
      </property>
     </widget>
    </widget>
-   <widget class="QPushButton" name="pushButtonDM">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>30</y>
-      <width>89</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>DM Button</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="widgetPlayer" native="true">
     <property name="geometry">
      <rect>
@@ -170,19 +157,6 @@
      </property>
      <property name="text">
       <string>Nová mapa</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btn_calibration">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>380</y>
-       <width>91</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Kalibrace</string>
      </property>
     </widget>
    </widget>
@@ -402,23 +376,67 @@
      </property>
     </widget>
    </widget>
+   <widget class="QScrollArea" name="editBtsScrollArea">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>50</y>
+      <width>111</width>
+      <height>521</height>
+     </rect>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustToContents</enum>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>109</width>
+       <height>519</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
    <widget class="QWidget" name="box_editMap" native="true">
     <property name="enabled">
      <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>910</x>
       <y>90</y>
       <width>81</width>
-      <height>391</height>
+      <height>4000</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>4000</height>
+     </size>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
     </property>
     <widget class="QPushButton" name="btn_editMap_end">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>320</y>
+       <y>75</y>
        <width>80</width>
        <height>25</height>
       </rect>
@@ -427,15 +445,31 @@
       <string>Konec úprav</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="btn_saveMap">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>80</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Save Map</string>
+     </property>
+    </widget>
    </widget>
-   <widget class="QWidget" name="box_dicesRolls" native="true">
+   <widget class="QPushButton" name="btn_hideShowEditMap">
     <property name="geometry">
      <rect>
-      <x>689</x>
-      <y>50</y>
-      <width>141</width>
-      <height>451</height>
+      <x>1020</x>
+      <y>490</y>
+      <width>80</width>
+      <height>25</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>Show / hide </string>
     </property>
    </widget>
   </widget>

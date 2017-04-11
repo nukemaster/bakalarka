@@ -2,53 +2,25 @@
 #include "ui_detection.h"
 
 Detection::Detection(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Detection)
+    QWidget(parent)
 {
-    ui->setupUi(this);
-
     kinect = new Kinect();
 }
 
 
 void Detection::run()
 {
-    std::vector<cv::Point> points;
-    cv::Point2i point;
+//    std::vector<cv::Point> points;
+//    cv::Point2i point;
 
     if (!d_mat.empty()) {
-        tmp = false;
+        d_matMutex = false;
         d_mat.release();
     }
     this->d_mat = kinect->getDepthFrame();
-    tmp = true;
+    d_matMutex = true;
     inputCorection();
-    points = this->cvDetect(d_mat);
-
-    if (points.empty()) {
-
-        newCoordinates(-1, -1, false);
-        return;
-    }
-
-    point = coordinateConversion(points[0].x, points[0].y);
-    if (this->isPointInTouchArea(points[0])) {
-        if (this->isPointInTouchDepth(points[0])) {
-            newCoordinates(point.x, point.y, true);
-            newRawCoordinates(points[0].x, points[0].y, true);
-            //qDebug()<<"true";
-        }
-        else {
-            newCoordinates(point.x, point.y, false);
-            newRawCoordinates(points[0].x, points[0].y, false);
-            //qDebug()<<"false";
-        }
-    }
-    else {
-        newCoordinates(-1, -1, false);
-    }
-
-//    d_mat.release();
+    this->cvDetect(d_mat);
 }
 
 /**
@@ -84,20 +56,15 @@ std::vector<cv::Point> Detection::cvDetect(Mat d_mat)
     vector<Vec4i> hierarchy;
     vector<vector<Point> > contours;
     std::vector<cv::Point> validPoints;
-    Size d_size = Size(settings->inputDepthWidth, settings->inputDepthHeight);
-    Mat drawing = Mat::zeros( d_size, CV_8UC3 ); //vytvoreni plochy pro vykresleni vysledky hledani
     std::vector<bool> p = {false, false, false, false};
+    Point foundPoint;
+
+//    Mat drawing; //debug
 
     //thresholding
     cv::inRange(d_mat, Scalar(settings->minDepth), Scalar(settings->maxDepth), d_mat);
-    d_mat.convertTo(drawing, CV_8UC3);
 
-
-    cv::rectangle(drawing, cv::Point(settings->touchAreaX1, settings->touchAreaY1), cv::Point(settings->touchAreaX2, settings->touchAreaY2), cv::Scalar(255, 255, 0));      //vykreslen oblasti dotyku
-    sendMat(&drawing);
-//    cv::imshow("depth", d_mat);
-//    waitKey(0);
-
+//    d_mat.convertTo(drawing, CV_8UC3); //debug
 
     //odstranení šumu
     int erosion_size = 1;
@@ -118,8 +85,9 @@ std::vector<cv::Point> Detection::cvDetect(Mat d_mat)
 
     if (!contours.empty())
     {
+        //serazeni kontur podle velikosti
         vector <vector<int>> contourSizes;
-        for (int i = 0; i < (signed int) contours.size(); i++)    //find largest contour
+        for (int i = 0; i < (signed int) contours.size(); i++)
         {
             contourSizes.push_back({i, (int) cv::contourArea(contours[i])}); //ulozi index contury s jejim obsahem
         }
@@ -139,6 +107,7 @@ std::vector<cv::Point> Detection::cvDetect(Mat d_mat)
 
                 cv::convexHull(cv::Mat(contours[largestContour]), hull[0], false);
 
+                //zjisteni kteremu hraci patri zpracovavana kontura
                 if (hull[0].size() > 2) {
                     for (int ii = 0; ii < playersPoins.size(); ii++) {  //pro kazdeho hrace
                         for (int i = 0; i < playersPoins[ii].size(); i++) { //prohledej vsechny jeh body
@@ -162,32 +131,23 @@ std::vector<cv::Point> Detection::cvDetect(Mat d_mat)
                 break;
             }
 
-            cv::drawContours(drawing, contours, largestContour, cv::Scalar(0, 0, 255), 1); //vykreslen9 kontury
-            cv::drawContours(drawing, hull, 0, cv::Scalar(0, 255, 0), 1);
-
+            //nalezeni bodu kam hrac ukazuje
             if (hull[0].size() > 2)
             {
-
+                //nalezeni konvexnich defektu
                 std::vector<int> hullIndexes;
                 cv::convexHull(cv::Mat(contours[largestContour]), hullIndexes, true);
                 std::vector<cv::Vec4i> convexityDefects;
                 cv::convexityDefects(cv::Mat(contours[largestContour]), hullIndexes, convexityDefects);
-                cv::Rect boundingBox = cv::boundingRect(hull[0]);
 
-                cv::putText(drawing, std::to_string(player), cv::Point(boundingBox.x, boundingBox.y), 1, 1, cv::Scalar(0, 255, 0));
-
-                cv::rectangle(drawing, boundingBox, cv::Scalar(0, 255, 0));
-                cv::Point center = cv::Point(boundingBox.x + boundingBox.width / 2, boundingBox.y + boundingBox.height / 2);
-
+                //hledani nejvetsiho konvexniho defektu
                 int maxArea = 0;    //ulozeni plochy nejvetsiho zatim nalezeneho konvexniho defektu
                 cv::Point po1, po2, po3;    //ulozeni vrcholu nejvetsiho konvexniho defektu
                 for (size_t i = 0; i < convexityDefects.size(); i++)
                 {
                     cv::Point p1 = contours[largestContour][convexityDefects[i][0]];
                     cv::Point p2 = contours[largestContour][convexityDefects[i][1]];
-                    cv::Point p3 = contours[largestContour][convexityDefects[i][2]];
-                    cv::line(drawing, p1, p3, cv::Scalar(255, 0, 0), 1);
-                    cv::line(drawing, p3, p2, cv::Scalar(255, 0, 0), 1);
+                    cv::Point p3 = contours[largestContour][convexityDefects[i][2]];                    
 
                     //pocitani obsahu konvexniho defektu
                     int a = cv::norm(p1-p2);
@@ -195,71 +155,47 @@ std::vector<cv::Point> Detection::cvDetect(Mat d_mat)
                     int c = cv::norm(p3-p1);
                     int s = (a+b+c)/2;
                     s = sqrt(s*(s-a)*(s-b)*(s-c));
-                    //hledani nejvetsiho konvexniho defektu
+
                     if (s > maxArea) {
                         maxArea = s;
                         po1 = p1;
                         po2 = p2;
                         po3 = p3;
                     }
-                    /*
-                    double angle = std::atan2(center.y - p1.y, center.x - p1.x) * 180 / CV_PI;
-                    double inAngle = Detection::innerAngle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
-                    double length = std::sqrt(std::pow(p1.x - p3.x, 2) + std::pow(p1.y - p3.y, 2));
-                    if (angle > -30 && angle < 160 && std::abs(inAngle) > 20 && std::abs(inAngle) < 120 && length > 0.1 * boundingBox.height)
-                    {
-                        validPoints.push_back(p1);
-                    }
-                    */
                 }
 
-                //vykresleni vrcholu nejvetsiho konvexniho defektu
-                cv::circle(drawing, po1, 12, cv::Scalar(0, 255, 255), 1);
-                cv::circle(drawing, po2, 12, cv::Scalar(0, 255, 255), 1);
-                cv::circle(drawing, po3, 12, cv::Scalar(0, 255, 255), 1);
-                validPoints.push_back(po1);
-                validPoints.push_back(po2);
-                validPoints.push_back(po3);
+                //vybrani nejvzdalenejsiho bodu konvexniho defektu od hrace
+                if (cv::pointPolygonTest(playersPoins[player],  po1, true) < cv::pointPolygonTest(playersPoins[player],  po2, true)) {
+                    foundPoint = po1;
+                }
+                else {
+                    foundPoint = po2;
+                }
 
+                validPoints.push_back(foundPoint);
+//                cv::circle(drawing, foundPoint, 12, cv::Scalar(255), 1);
+//                cv::imshow("debug", drawing);
 
                 //kontrola zda neni bod v oblasti deteku
-                for (unsigned int i = 0; i < validPoints.size(); i++) {
-                    if (!isPointInTouchArea(validPoints[i])) {
-                        validPoints.erase(validPoints.begin()+i);
-                        continue;
-                    }
-
-                    if (isPointInTouchDepth(validPoints[i])) {  //kontrola zda bod nelezi v pod hloubkou pro dotyk
-                        cv::circle(drawing, validPoints[i], 7, cv::Scalar(0, 0, 255), 2);
-                    }
-                    cv::circle(drawing, validPoints[i], 9, cv::Scalar(0, 255, 0), 2);
-                }
-                for (size_t i = 0; i < validPoints.size(); i++)
-                {
-                    //cv::circle(drawing, validPoints[i], 9, cv::Scalar(0, 255, 0), 2);
+                if (isPointInTouchArea(foundPoint)) {
+                    foundPoint  = coordinateConversion(foundPoint.x, foundPoint.y);
+//                    cursor().setPos(foundPoint.x, foundPoint.y);
+//                    qDebug()<<foundPoint.x << foundPoint.y;
+//                    qDebug()<<player;
+                    newCoordinates(foundPoint.x, foundPoint.y, player);
                 }
             }
         }
     }
 
-    for (int ii = 0; ii < playersPoins.size(); ii++) {
-        for (int i = 0; i < playersPoins[ii].size(); i++) {
-            cv::circle(drawing, playersPoins[ii][i], 12, cv::Scalar(255, 255, 255), 1);
-        }
-    }
     for (int i = 0; i < p.size(); i++) {    //procisteni hracu kteri nebyly detekovani
         if (p[i] == false) {
             playersHulls[i].clear();
         }
     }
 
-//    cv::imshow("windowName2", drawing);
+//    cv::imshow("test", d_mat);
 
-//    waitKey(0);
-    drawing.release();
-
-    //if (!validPoints.empty())
-    //    qDebug()<<this->pointDepth(validPoints[0]);
     return validPoints;
 }
 
@@ -282,7 +218,7 @@ bool Detection::isPointInTouchDepth(Point point)
 
 int Detection::pointDepth(Point point)
 {
-    while (tmp == false) {
+    while (d_matMutex == false) {
     //qDebug()<<d_mat.at<float>(point.x, point.y);
         return d_mat.at<float>(point.x, point.y);
     }
@@ -291,7 +227,6 @@ int Detection::pointDepth(Point point)
 Detection::~Detection()
 {
     //todo
-    delete ui;
 //    delete d_reader;
 //    delete c_reader;
 //    delete d_buffer;
@@ -322,7 +257,7 @@ int Detection::playerOnCoordinates(int x, int y)
             player = i;
         }
     }
-    //qDebug()<<"detection>"<<player;
+    //qDebug()<<
     return player;
 }
 
